@@ -21,35 +21,34 @@
  *
  */
 
-import Turtle from './turtle.js';
-import Generator from './generator.js';
+class Generator {
 
-let turtle;
-let generator;
-export function initialize($container, { axiom, productions }) {
+    constructor(productions) {
+        this.productions = productions;
+    }
 
-    let ping,
-        pong;
+    rewrite(string) {
+        let self = this,
+            list,
+            rewritten;
 
-    generator = new Generator(productions);
-    ping = generator.rewrite(axiom);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
+        list = string.split('')
+            .reduce((accumulator, letter) => {
+                let replacement = self.productions[ letter ] || letter;
+                accumulator.push( replacement );
+                return accumulator;
+            }, []);
 
-    turtle = new Turtle({ x: 4, y: 4, alpha: 45 });
+        rewritten = list.join('');
+        return rewritten;
+    }
 
-    turtle.interpret({ command: 'f', delta: 8 });
-    turtle.interpret({ command: 'F', delta: 4 });
-
-    turtle.interpret({ command: '+', delta: 5 });
-    turtle.interpret({ command: '-', delta: 5 });
+    describe() {
+        let string;
+        string = 'Generator';
+        return string;
+    }
 
 }
 
+export default Generator;

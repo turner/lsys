@@ -21,35 +21,17 @@
  *
  */
 
-import Turtle from './turtle.js';
-import Generator from './generator.js';
+const PI_DIV_180 = (Math.PI/180.0);
 
-let turtle;
-let generator;
-export function initialize($container, { axiom, productions }) {
-
-    let ping,
-        pong;
-
-    generator = new Generator(productions);
-    ping = generator.rewrite(axiom);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-
-    turtle = new Turtle({ x: 4, y: 4, alpha: 45 });
-
-    turtle.interpret({ command: 'f', delta: 8 });
-    turtle.interpret({ command: 'F', delta: 4 });
-
-    turtle.interpret({ command: '+', delta: 5 });
-    turtle.interpret({ command: '-', delta: 5 });
-
+export function degreesToRadians(degrees){
+    return degrees * PI_DIV_180;
 }
 
+export function radiansToDegrees(radians){
+    return radians / PI_DIV_180;
+}
+
+// Returns a random number between min (inclusive) and max (exclusive)
+export function random(min, max) {
+    return Math.random() * (max - min) + min;
+}

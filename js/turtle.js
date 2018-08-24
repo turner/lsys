@@ -21,96 +21,97 @@
  *
  */
 
-'use strict';
+import { degreesToRadians } from './math.js';
 
-var app = (function(app) {
+const commands = new Set([ 'F', 'f', '+', '-' ]);
 
-    const commands = new Set([ 'F', 'f', '+', '-' ]);
+const interpreter =
+    {
 
-    const interpreter =
-        {
+        translate: (state, deltaXY) => {
+            let newState,
+                radians;
 
-            translate: (state, deltaXY) => {
-                let newState,
-                    radians;
+            radians = degreesToRadians(state.alpha);
+            newState =
+                {
+                    x: state.x + deltaXY * Math.cos( radians ),
+                    y: state.y + deltaXY * Math.sin( radians ),
+                    alpha: state.alpha
+                };
 
-                radians = app.math.degreesToRadians(state.alpha);
-                newState =
-                    {
-                        x: state.x + deltaXY * Math.cos( radians ),
-                        y: state.y + deltaXY * Math.sin( radians ),
-                        alpha: state.alpha
-                    };
+            return newState;
+        },
 
-                return newState;
-            },
+        rotate: (state, deltaAlpha) => {
+            let newState;
+            newState =
+                {
+                    x: state.x,
+                    y: state.y,
+                    alpha: state.alpha + deltaAlpha,
+                };
 
-            rotate: (state, deltaAlpha) => {
-                let newState;
-                newState =
-                    {
-                        x: state.x,
-                        y: state.y,
-                        alpha: state.alpha + deltaAlpha,
-                    };
+            return newState;
+        },
 
-                return newState;
-            },
+        'F': (state, deltaXY) => {
+            return interpreter.translate(state, deltaXY);
+        },
 
-            'F': (state, deltaXY) => {
-                return interpreter.translate(state, deltaXY);
-            },
+        'f': (state, deltaXY) => {
+            return interpreter.translate(state, deltaXY);
+        },
 
-            'f': (state, deltaXY) => {
-                return interpreter.translate(state, deltaXY);
-            },
+        '+': (state, deltaAlpha) => {
+            return interpreter.rotate(state, deltaAlpha);
+        },
 
-            '+': (state, deltaAlpha) => {
-                return interpreter.rotate(state, deltaAlpha);
-            },
+        '-': (state, deltaAlpha) => {
+            return interpreter.rotate(state, -deltaAlpha);
+        }
 
-            '-': (state, deltaAlpha) => {
-                return interpreter.rotate(state, -deltaAlpha);
-            }
+    };
 
-        };
+class Turtle {
 
-    app.Turtle = function (config) {
+    constructor({ x, y, alpha }) {
 
         this.state =
             {
                 // position
-                x: config.x,
-                y: config.y,
+                x: x,
+                y: y,
 
                 // heading
-                alpha:config.alpha,
-            };
+                alpha:alpha
+            }
 
-    };
+    }
 
-    app.Turtle.prototype.interpret = function(config) {
+    interpret({ command, delta }) {
 
-        if (commands.has(config.command)) {
+        if (commands.has(command)) {
             let str;
 
-            str = config.command + ' ';
+            this.state = interpreter[ command ](this.state, delta);
 
-            this.state = interpreter[ config.command ](this.state, config.delta);
+            str = command + ' ' + this.describe();
 
-            if ('F' === config.command) {
-                this.description(('draw line segment ' + str));
+            if ('F' === command) {
+                console.log((str + ' draw line segment'));
             } else {
-                this.description(str);
+                console.log(str);
             }
         }
-    };
+    }
 
-    app.Turtle.prototype.description = function (blurb = '') {
+    describe() {
         let string;
-        string = blurb + 'x ' + Math.round(this.state.x) + ' y ' + Math.round(this.state.y) + ' alpha ' + this.state.alpha;
-        console.log( string );
-    };
+        string = 'x ' + Math.round(this.state['x']) + ' y ' + Math.round(this.state['y']) + ' alpha ' + this.state['alpha'];
+        return string;
+    }
 
-    return app;
-})(app || {});
+}
+
+export default Turtle;
