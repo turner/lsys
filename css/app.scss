@@ -1,5 +1,9 @@
+$default-grey-color: #efefef;
+body {
+  background-color: $default-grey-color;
+}
 
 .svg-container {
-  background-color: #efefef;
+  background-color: $default-grey-color;
 }
 
