@@ -31,6 +31,7 @@ export function initialize($container, { axiom, productions }) {
     let ping,
         pong;
 
+    // generate a string
     generator = new Generator(productions);
     ping = generator.rewrite(axiom);
     pong = generator.rewrite(ping);
@@ -43,6 +44,7 @@ export function initialize($container, { axiom, productions }) {
     ping = generator.rewrite(pong);
     pong = generator.rewrite(ping);
 
+    // create a turtle
     turtle = new Turtle({ x: 4, y: 4, alpha: 45 });
 
     turtle.interpret({ command: 'f', delta: 8 });

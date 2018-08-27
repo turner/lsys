@@ -44,9 +44,7 @@ class Generator {
     }
 
     describe() {
-        let string;
-        string = 'Generator';
-        return string;
+        return 'Generator';
     }
 
 }

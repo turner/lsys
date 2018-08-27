@@ -21,57 +21,7 @@
  *
  */
 
-import { degreesToRadians } from './math.js';
-
-const commands = new Set([ 'F', 'f', '+', '-' ]);
-
-const interpreter =
-    {
-
-        translate: (state, deltaXY) => {
-            let newState,
-                radians;
-
-            radians = degreesToRadians(state.alpha);
-            newState =
-                {
-                    x: state.x + deltaXY * Math.cos( radians ),
-                    y: state.y + deltaXY * Math.sin( radians ),
-                    alpha: state.alpha
-                };
-
-            return newState;
-        },
-
-        rotate: (state, deltaAlpha) => {
-            let newState;
-            newState =
-                {
-                    x: state.x,
-                    y: state.y,
-                    alpha: state.alpha + deltaAlpha,
-                };
-
-            return newState;
-        },
-
-        'F': (state, deltaXY) => {
-            return interpreter.translate(state, deltaXY);
-        },
-
-        'f': (state, deltaXY) => {
-            return interpreter.translate(state, deltaXY);
-        },
-
-        '+': (state, deltaAlpha) => {
-            return interpreter.rotate(state, deltaAlpha);
-        },
-
-        '-': (state, deltaAlpha) => {
-            return interpreter.rotate(state, -deltaAlpha);
-        }
-
-    };
+import { interpret } from './interpreter.js';
 
 class Turtle {
 
@@ -85,25 +35,23 @@ class Turtle {
 
                 // heading
                 alpha:alpha
-            }
+            };
 
     }
 
-    interpret({ command, delta }) {
+    interpret ({ command, delta }) {
+        let str;
 
-        if (commands.has(command)) {
-            let str;
+        this.state = interpret({ state: this.state, command: command, delta: delta });
 
-            this.state = interpreter[ command ](this.state, delta);
+        str = command + ' ' + this.describe();
 
-            str = command + ' ' + this.describe();
-
-            if ('F' === command) {
-                console.log((str + ' draw line segment'));
-            } else {
-                console.log(str);
-            }
+        if ('F' === command) {
+            console.log((str + ' draw line segment'));
+        } else {
+            console.log(str);
         }
+
     }
 
     describe() {
