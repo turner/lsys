@@ -26,22 +26,30 @@ import Generator from './generator.js';
 
 let turtle;
 let generator;
-export function initialize($container, { axiom, productions }) {
+export function initialize($container, { axiom, productions, generation }) {
 
     let ping,
         pong;
 
     // generate a string
     generator = new Generator(productions);
+
+    describeStringGeneration(axiom);
     ping = generator.rewrite(axiom);
+
+    describeStringGeneration(ping);
     pong = generator.rewrite(ping);
+
+    describeStringGeneration(pong);
     ping = generator.rewrite(pong);
+
+    describeStringGeneration(ping);
     pong = generator.rewrite(ping);
+
+    describeStringGeneration(pong);
     ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
-    pong = generator.rewrite(ping);
-    ping = generator.rewrite(pong);
+
+    describeStringGeneration(ping);
     pong = generator.rewrite(ping);
 
     // create a turtle
@@ -55,3 +63,6 @@ export function initialize($container, { axiom, productions }) {
 
 }
 
+function describeStringGeneration({ string, generation }) {
+    console.log('generation ' + generation + ' ' + string);
+}

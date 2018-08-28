@@ -27,7 +27,7 @@ class Generator {
         this.productions = productions;
     }
 
-    rewrite(string) {
+    rewrite({ string, generation }) {
         let self = this,
             list,
             rewritten;
@@ -39,12 +39,8 @@ class Generator {
                 return accumulator;
             }, []);
 
-        rewritten = list.join('');
+        rewritten = { string: list.join(''), generation: (1 + generation) };
         return rewritten;
-    }
-
-    describe() {
-        return 'Generator';
     }
 
 }
