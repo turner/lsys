@@ -26,7 +26,7 @@ import Generator from './generator.js';
 
 let turtle;
 let generator;
-export function initialize($container, { axiom, productions, generation }) {
+export let main = ($container, { axiom, productions }) => {
 
     let ping,
         pong;
@@ -61,8 +61,8 @@ export function initialize($container, { axiom, productions, generation }) {
     turtle.interpret({ command: '+', delta: 5 });
     turtle.interpret({ command: '-', delta: 5 });
 
-}
+};
 
-function describeStringGeneration({ string, generation }) {
+let  describeStringGeneration = ({ string, generation }) => {
     console.log('generation ' + generation + ' ' + string);
-}
+};

@@ -29,8 +29,7 @@ class Generator {
 
     rewrite({ string, generation }) {
         let self = this,
-            list,
-            rewritten;
+            list;
 
         list = string.split('')
             .reduce((accumulator, letter) => {
@@ -39,8 +38,7 @@ class Generator {
                 return accumulator;
             }, []);
 
-        rewritten = { string: list.join(''), generation: (1 + generation) };
-        return rewritten;
+        return { string: list.join(''), generation: (1 + generation) };
     }
 
 }
