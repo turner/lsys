@@ -61,6 +61,19 @@ export let main = ($container, { axiom, productions }) => {
     turtle.interpret({ command: '+', delta: 5 });
     turtle.interpret({ command: '-', delta: 5 });
 
+    let svg = SVG($container.get(0)).size('100%', '100%');
+
+    let root_group = svg.group().transform({ x:32, y:32 });
+    let root = svg.rect(736, 736).attr( { fill:'yellow' } );
+    root_group.add(root);
+
+    let radius = 8;
+    let origin_group = svg.group().transform({ x:368, y:(736-radius) });
+    let origin = svg.circle(2 * radius).attr( { fill:'red', 'stroke':"grey", 'stroke-width':2 });
+
+    origin_group.add(origin);
+    root_group.add(origin_group);
+
 };
 
 let  describeStringGeneration = ({ string, generation }) => {

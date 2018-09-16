@@ -1,6 +1,20 @@
 $default-grey-color: #efefef;
+$container-margin: 8px;
+$container-width: 800px;
+$container-height: $container-width;
+
 body {
   background-color: $default-grey-color;
+}
+
+#root-container {
+
+  margin: $container-margin;
+
+  width: $container-width;
+  height: $container-height;
+
+  background-color: aquamarine;
 }
 
 .svg-container {

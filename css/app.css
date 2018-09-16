@@ -1,6 +1,12 @@
 body {
   background-color: #efefef; }
 
+#root-container {
+  margin: 8px;
+  width: 800px;
+  height: 800px;
+  background-color: aquamarine; }
+
 .svg-container {
   background-color: #efefef; }
 
