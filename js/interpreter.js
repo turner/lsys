@@ -64,11 +64,11 @@ const interpreter =
         },
 
         '+': (state, deltaAlpha) => {
-            return interpreter.rotate(state, deltaAlpha);
+            return interpreter.rotate(state, -deltaAlpha);
         },
 
         '-': (state, deltaAlpha) => {
-            return interpreter.rotate(state, -deltaAlpha);
+            return interpreter.rotate(state, deltaAlpha);
         }
 
     };

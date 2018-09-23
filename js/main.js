@@ -31,13 +31,17 @@ export let main = ($container, { axiom, productions }) => {
     let ping,
         pong;
 
+    // create a turtle
+    turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
+
     // generate a string
     generator = new Generator(productions);
-    describeStringGeneration(axiom);
+    // describeStringGeneration(axiom);
+    // turtle.interpretString({ string: axiom.string, delta: 4, alpha: 90 });
 
     ping = generator.rewrite(axiom);
     describeStringGeneration(ping);
-
+    turtle.interpretString({ string: ping.string, delta: 4, alpha: 90 });
 
 
     // pong = generator.rewrite(ping);
@@ -53,17 +57,6 @@ export let main = ($container, { axiom, productions }) => {
     //
     // describeStringGeneration(ping);
     // pong = generator.rewrite(ping);
-
-    // create a turtle
-    turtle = new Turtle({ x: 0, y: 0, alpha: 0 });
-
-    turtle.interpret({ command: 'F', delta: 4 });
-    turtle.interpret({ command: '-', delta: 90 });
-    turtle.interpret({ command: 'F', delta: 4 });
-    turtle.interpret({ command: '-', delta: 90 });
-    turtle.interpret({ command: 'F', delta: 4 });
-    turtle.interpret({ command: '-', delta: 90 });
-    turtle.interpret({ command: 'F', delta: 4 });
 
     let svg = SVG($container.get(0)).size('100%', '100%');
 

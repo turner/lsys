@@ -42,6 +42,14 @@ class Turtle {
         console.log( this.describe() );
     }
 
+    interpretString ({ string, delta, alpha }) {
+        let self = this;
+
+        string.split('').forEach((token) => {
+            self.interpret({ command: token, delta: ('F' === token ? delta : alpha) })
+        });
+    }
+
     interpret ({ command, delta }) {
         let str;
 
