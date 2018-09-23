@@ -57,11 +57,13 @@ export let main = ($container, { axiom, productions }) => {
     // create a turtle
     turtle = new Turtle({ x: 0, y: 0, alpha: 0 });
 
-    // turtle.interpret({ command: 'f', delta: 8 });
-    // turtle.interpret({ command: 'F', delta: 4 });
-    //
-    // turtle.interpret({ command: '+', delta: 5 });
-    // turtle.interpret({ command: '-', delta: 5 });
+    turtle.interpret({ command: 'F', delta: 4 });
+    turtle.interpret({ command: '-', delta: 90 });
+    turtle.interpret({ command: 'F', delta: 4 });
+    turtle.interpret({ command: '-', delta: 90 });
+    turtle.interpret({ command: 'F', delta: 4 });
+    turtle.interpret({ command: '-', delta: 90 });
+    turtle.interpret({ command: 'F', delta: 4 });
 
     let svg = SVG($container.get(0)).size('100%', '100%');
 

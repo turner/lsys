@@ -39,6 +39,7 @@ class Turtle {
                 alpha:alpha
             };
 
+        console.log( this.describe() );
     }
 
     interpret ({ command, delta }) {
@@ -46,11 +47,10 @@ class Turtle {
 
         this.state = Interpreter.interpret({ state: this.state, command: command, delta: delta });
 
-        str = command + ' ' + this.describe();
+        // str = command + ' ' + this.describe();
+        str = this.describe();
 
         if ('F' === command) {
-            console.log((str + ' draw line segment'));
-        } else {
             console.log(str);
         }
 
@@ -58,7 +58,9 @@ class Turtle {
 
     describe() {
         let string;
-        string = 'x ' + Math.round(this.state['x']) + ' y ' + Math.round(this.state['y']) + ' alpha ' + this.state['alpha'];
+        // string = 'x y alpha ' + Math.round(this.state['x']) + ' ' + Math.round(this.state['y']) + ' ' + this.state['alpha'];
+        // string = 'x y alpha ' + Math.round(this.state['x']) + ' ' + Math.round(this.state['y']);
+        string = Math.round(this.state['x']) + ' ' + Math.round(this.state['y']);
         return string;
     }
 
