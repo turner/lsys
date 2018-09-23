@@ -33,33 +33,35 @@ export let main = ($container, { axiom, productions }) => {
 
     // generate a string
     generator = new Generator(productions);
-
     describeStringGeneration(axiom);
+
     ping = generator.rewrite(axiom);
-
     describeStringGeneration(ping);
-    pong = generator.rewrite(ping);
 
-    describeStringGeneration(pong);
-    ping = generator.rewrite(pong);
 
-    describeStringGeneration(ping);
-    pong = generator.rewrite(ping);
 
-    describeStringGeneration(pong);
-    ping = generator.rewrite(pong);
+    // pong = generator.rewrite(ping);
 
-    describeStringGeneration(ping);
-    pong = generator.rewrite(ping);
+    // describeStringGeneration(pong);
+    // ping = generator.rewrite(pong);
+    //
+    // describeStringGeneration(ping);
+    // pong = generator.rewrite(ping);
+    //
+    // describeStringGeneration(pong);
+    // ping = generator.rewrite(pong);
+    //
+    // describeStringGeneration(ping);
+    // pong = generator.rewrite(ping);
 
     // create a turtle
-    turtle = new Turtle({ x: 4, y: 4, alpha: 45 });
+    turtle = new Turtle({ x: 0, y: 0, alpha: 0 });
 
-    turtle.interpret({ command: 'f', delta: 8 });
-    turtle.interpret({ command: 'F', delta: 4 });
-
-    turtle.interpret({ command: '+', delta: 5 });
-    turtle.interpret({ command: '-', delta: 5 });
+    // turtle.interpret({ command: 'f', delta: 8 });
+    // turtle.interpret({ command: 'F', delta: 4 });
+    //
+    // turtle.interpret({ command: '+', delta: 5 });
+    // turtle.interpret({ command: '-', delta: 5 });
 
     let svg = SVG($container.get(0)).size('100%', '100%');
 
@@ -77,5 +79,9 @@ export let main = ($container, { axiom, productions }) => {
 };
 
 let  describeStringGeneration = ({ string, generation }) => {
-    console.log('generation ' + generation + ' ' + string);
+
+    let draw_calls = string.split(/[^A-Za-z]/).join('');
+
+    console.log('generation ' + generation + ' ' + string + ' draw calls ' + draw_calls.length);
+
 };

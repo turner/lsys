@@ -21,10 +21,12 @@
  *
  */
 
-import { interpret } from './interpreter.js';
+import * as Interpreter from './interpreter.js';
 
 class Turtle {
 
+    // position: x y
+    // heading: alpha (degrees)
     constructor({ x, y, alpha }) {
 
         this.state =
@@ -42,7 +44,7 @@ class Turtle {
     interpret ({ command, delta }) {
         let str;
 
-        this.state = interpret({ state: this.state, command: command, delta: delta });
+        this.state = Interpreter.interpret({ state: this.state, command: command, delta: delta });
 
         str = command + ' ' + this.describe();
 

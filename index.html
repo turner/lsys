@@ -53,25 +53,12 @@
 <script type="module">
 
     import { main } from './js/main.js';
-    // import initialize from './js/main.js';
+    // import { production } from "./js/productions/example_dol_system.js";
+    import { production } from "./js/productions/quadratic_koch_island.js";
 
     $(document).ready(function () {
 
-        const appConfiguration =
-            {
-                axiom:
-                    {
-                        string: 'b',
-                        generation: 0
-                    },
-                productions:
-                    {
-                        a: 'ab',
-                        b: 'a'
-                    }
-            };
-
-        main($('#root-container'), appConfiguration);
+        main($('#root-container'), production);
     });
 
 </script>
