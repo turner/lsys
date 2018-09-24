@@ -34,25 +34,27 @@ export let main = ($container, { axiom, productions }) => {
 
     let interpreter = new Interpreter();
 
-    let turtle = new Turtle({ x: 0, y: 0, alpha: 90 });
+    let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
 
-    describeStringGeneration(axiom);
-    interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: 4, alpha: 90 });
+    // describeStringGeneration(axiom);
+    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: 4, alpha: 90 });
 
-    // ping = generator.rewrite(axiom);
+    ping = generator.rewrite(axiom);
 
-    // describeStringGeneration(ping);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: 4, alpha: 90 });
+    describeStringGeneration(ping);
+    interpreter.interpretString({ turtle: turtle, string: ping.string, delta: 4, alpha: 90 });
 
 
-    let svg = SVG($container.get(0)).size('100%', '100%');
+    let svg = SVG($container.get(0)).size($container.width(), $container.height());
 
-    let root_group = svg.group().transform({ x:32, y:32 });
-    let root = svg.rect(736, 736).attr( { fill:'yellow' } );
+    let root_group = svg.group().transform({ x:0.05 * $container.width(), y:0.05 * $container.height() });
+
+    let dimen = 0.9 * $container.width();
+    let root = svg.rect(dimen, dimen).attr( { fill:'yellow' } );
     root_group.add(root);
 
     let radius = 8;
-    let origin_group = svg.group().transform({ x:368, y:(736-radius) });
+    let origin_group = svg.group().transform({ x:dimen/2, y:(dimen-radius) });
     let origin = svg.circle(2 * radius).attr( { fill:'red', 'stroke':"grey", 'stroke-width':2 });
 
     origin_group.add(origin);
