@@ -30,6 +30,9 @@ let describeState = ({ x, y, alpha }) => {
 
 };
 
+// SVG line command
+// <line x1="0" y1="80" x2="100" y2="20" stroke="black" />
+
 class Interpreter {
 
     constructor() {
@@ -49,11 +52,11 @@ class Interpreter {
             },
 
             '+': (state, deltaAlpha) => {
-                return Interpreter.rotate(state, -deltaAlpha);
+                return Interpreter.rotate(state, deltaAlpha);
             },
 
             '-': (state, deltaAlpha) => {
-                return Interpreter.rotate(state, deltaAlpha);
+                return Interpreter.rotate(state, -deltaAlpha);
             },
 
             '[': (state, delta) => {

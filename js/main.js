@@ -34,15 +34,15 @@ export let main = ($container, { axiom, productions }) => {
 
     let interpreter = new Interpreter();
 
-    let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
+    let turtle = new Turtle({ x: 0, y: 0, alpha: 90 });
 
-    describeStringGeneration(axiom);
-    interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: 4, alpha: 90 });
+    // describeStringGeneration(axiom);
+    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: 4, alpha: 90 });
 
-    // ping = generator.rewrite(axiom);
+    ping = generator.rewrite(axiom);
 
-    // describeStringGeneration(ping);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: 4, alpha: 90 });
+    describeStringGeneration(ping);
+    interpreter.interpretString({ turtle: turtle, string: ping.string, delta: 4, alpha: 90 });
 
 
     let svg = SVG($container.get(0)).size('100%', '100%');
