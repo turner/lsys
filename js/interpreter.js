@@ -23,56 +23,97 @@
 
 import { degreesToRadians } from './math.js';
 
-const commands = new Set([ 'F', 'f', '+', '-' ]);
+class Interpreter {
 
-const interpreter =
-    {
+    constructor() {
 
-        translate: (state, deltaXY) => {
-            let newState,
-                radians;
+        this.tokens = new Set([ 'F', 'f', '+', '-', '[', ']' ]);
 
-            radians = degreesToRadians(state.alpha);
-            newState =
-                {
-                    x: state.x + deltaXY * Math.cos( radians ),
-                    y: state.y + deltaXY * Math.sin( radians ),
-                    alpha: state.alpha
-                };
+        let self = this;
 
-            return newState;
-        },
+        this.commands = {
+            'F': (state, deltaXY) => {
+                return Interpreter.translate(state, deltaXY);
+            },
 
-        rotate: (state, deltaAlpha) => {
-            let newState;
-            newState =
-                {
-                    x: state.x,
-                    y: state.y,
-                    alpha: state.alpha + deltaAlpha,
-                };
+            'f': (state, deltaXY) => {
+                return Interpreter.translate(state, deltaXY);
+            },
 
-            return newState;
-        },
+            '+': (state, deltaAlpha) => {
+                return Interpreter.rotate(state, -deltaAlpha);
+            },
 
-        'F': (state, deltaXY) => {
-            return interpreter.translate(state, deltaXY);
-        },
+            '-': (state, deltaAlpha) => {
+                return Interpreter.rotate(state, deltaAlpha);
+            },
 
-        'f': (state, deltaXY) => {
-            return interpreter.translate(state, deltaXY);
-        },
+            '[': (state, delta) => {
+                return state;
+            },
 
-        '+': (state, deltaAlpha) => {
-            return interpreter.rotate(state, -deltaAlpha);
-        },
+            ']': (state, delta) => {
+                return state;
+            }
 
-        '-': (state, deltaAlpha) => {
-            return interpreter.rotate(state, deltaAlpha);
         }
 
-    };
+    }
 
-export function interpret({ state, command, delta }) {
-    return commands.has(command) ? interpreter[ command ](state, delta) : state;
+
+    interpretString ({ turtle, string, delta, alpha }) {
+        let self = this;
+
+        for (let token of string) {
+
+            turtle.state = self.interpret({ state: turtle.state, command: token, delta: ('F' === token ? delta : alpha) });
+
+            let str = turtle.describe();
+
+            if ('F' === token) {
+                console.log(str);
+            }
+
+        }
+
+    }
+
+    interpret({ state, command, delta }) {
+
+        if (this.tokens.has(command)) {
+            let f = this.commands[ command ];
+            return f(state, delta);
+        } else {
+            return state;
+        }
+    }
+
+    static translate(state, deltaXY) {
+        let newState;
+
+        newState =
+            {
+                x: state.x + deltaXY * Math.cos( degreesToRadians(state.alpha) ),
+                y: state.y + deltaXY * Math.sin( degreesToRadians(state.alpha) ),
+                alpha: state.alpha
+            };
+
+        return newState;
+    }
+
+    static rotate(state, deltaAlpha){
+        let newState;
+        newState =
+            {
+                x: state.x,
+                y: state.y,
+                alpha: state.alpha + deltaAlpha,
+            };
+
+        return newState;
+    }
+
+
 }
+
+export default Interpreter;

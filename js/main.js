@@ -23,40 +23,27 @@
 
 import Turtle from './turtle.js';
 import Generator from './generator.js';
+import Interpreter from './interpreter.js'
 
-let turtle;
-let generator;
 export let main = ($container, { axiom, productions }) => {
 
     let ping,
         pong;
 
-    // create a turtle
-    turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
+    let generator = new Generator(productions);
 
-    // generate a string
-    generator = new Generator(productions);
+    let interpreter = new Interpreter();
+
+    let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
+
     // describeStringGeneration(axiom);
-    // turtle.interpretString({ string: axiom.string, delta: 4, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: 4, alpha: 90 });
 
     ping = generator.rewrite(axiom);
+
     describeStringGeneration(ping);
-    turtle.interpretString({ string: ping.string, delta: 4, alpha: 90 });
+    interpreter.interpretString({ turtle: turtle, string: ping.string, delta: 4, alpha: 90 });
 
-
-    // pong = generator.rewrite(ping);
-
-    // describeStringGeneration(pong);
-    // ping = generator.rewrite(pong);
-    //
-    // describeStringGeneration(ping);
-    // pong = generator.rewrite(ping);
-    //
-    // describeStringGeneration(pong);
-    // ping = generator.rewrite(pong);
-    //
-    // describeStringGeneration(ping);
-    // pong = generator.rewrite(ping);
 
     let svg = SVG($container.get(0)).size('100%', '100%');
 

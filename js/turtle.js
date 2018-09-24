@@ -21,8 +21,6 @@
  *
  */
 
-import * as Interpreter from './interpreter.js';
-
 class Turtle {
 
     // position: x y
@@ -31,36 +29,10 @@ class Turtle {
 
         this.state =
             {
-                // position
                 x: x,
                 y: y,
-
-                // heading
                 alpha:alpha
             };
-
-        console.log( this.describe() );
-    }
-
-    interpretString ({ string, delta, alpha }) {
-        let self = this;
-
-        string.split('').forEach((token) => {
-            self.interpret({ command: token, delta: ('F' === token ? delta : alpha) })
-        });
-    }
-
-    interpret ({ command, delta }) {
-        let str;
-
-        this.state = Interpreter.interpret({ state: this.state, command: command, delta: delta });
-
-        // str = command + ' ' + this.describe();
-        str = this.describe();
-
-        if ('F' === command) {
-            console.log(str);
-        }
 
     }
 
