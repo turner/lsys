@@ -21,6 +21,8 @@
  *
  */
 
+import Stack from './stack.js';
+
 import { degreesToRadians } from './math.js';
 
 let describeState = ({ x, y, alpha }) => {
@@ -45,7 +47,7 @@ class Interpreter {
 
         this.tokens = new Set([ 'F', 'f', '+', '-', '[', ']' ]);
 
-        this.stack = [];
+        this.stack = new Stack();
 
         this.commands = {
             'F': (state, deltaXY) => {
@@ -77,7 +79,7 @@ class Interpreter {
 
                 self.stack.push({ ...state });
 
-                return self.stack[ self.stack.length - 1 ];
+                return self.stack.top();
             },
 
             ']': (state, delta) => {
@@ -87,7 +89,7 @@ class Interpreter {
                 let str = 'pop(' + describeState(dev_null) + ')';
                 console.log(str);
 
-                return self.stack[ self.stack.length - 1 ];
+                return self.stack.top();
             }
 
         }
@@ -102,7 +104,7 @@ class Interpreter {
         self.stack.push({ ...turtle.state });
 
         for (let token of string) {
-            self.stack[ self.stack.length - 1 ] = self.interpret({ state: self.stack[ self.stack.length - 1 ], command: token, delta: ('F' === token ? delta : alpha) });
+            self.stack.assignTop( self.interpret({ state: self.stack.top(), command: token, delta: ('F' === token ? delta : alpha) }) );
         }
 
     }
