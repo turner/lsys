@@ -23,13 +23,21 @@
 
 import { degreesToRadians } from './math.js';
 
+let describeState = ({ x, y, alpha }) => {
+    let string;
+    string = Math.round(x) + ' ' + Math.round(y);
+    return string;
+
+};
+
 class Interpreter {
 
     constructor() {
+        let self = this;
 
         this.tokens = new Set([ 'F', 'f', '+', '-', '[', ']' ]);
 
-        let self = this;
+        this.stack = [];
 
         this.commands = {
             'F': (state, deltaXY) => {
@@ -49,11 +57,23 @@ class Interpreter {
             },
 
             '[': (state, delta) => {
-                return state;
+
+                let str = 'push(' + describeState(state) + ')';
+                console.log(str);
+
+                self.stack.push({ ...state });
+
+                return self.stack[ self.stack.length - 1 ];
             },
 
             ']': (state, delta) => {
-                return state;
+
+                let dev_null = self.stack.pop();
+
+                let str = 'pop(' + describeState(dev_null) + ')';
+                console.log(str);
+
+                return self.stack[ self.stack.length - 1 ];
             }
 
         }
@@ -64,11 +84,14 @@ class Interpreter {
     interpretString ({ turtle, string, delta, alpha }) {
         let self = this;
 
+        // do all state manipulation via the stack
+        self.stack.push({ ...turtle.state });
+
         for (let token of string) {
 
-            turtle.state = self.interpret({ state: turtle.state, command: token, delta: ('F' === token ? delta : alpha) });
+            self.stack[ self.stack.length - 1 ] = self.interpret({ state: self.stack[ self.stack.length - 1 ], command: token, delta: ('F' === token ? delta : alpha) });
 
-            let str = turtle.describe();
+            let str = describeState(self.stack[ self.stack.length - 1 ]);
 
             if ('F' === token) {
                 console.log(str);
