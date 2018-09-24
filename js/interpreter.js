@@ -30,6 +30,11 @@ let describeState = ({ x, y, alpha }) => {
 
 };
 
+let descripePrettyLine = (x0, y0, x1, y1) => {
+
+    return 'from ' + Math.round(x0) + ' '+ Math.round(y0) + ' to ' + Math.round(x1) + ' '+ Math.round(y1);
+};
+
 // SVG line command
 // <line x1="0" y1="80" x2="100" y2="20" stroke="black" />
 
@@ -44,7 +49,13 @@ class Interpreter {
 
         this.commands = {
             'F': (state, deltaXY) => {
-                return Interpreter.translate(state, deltaXY);
+
+                let result = Interpreter.translate(state, deltaXY);
+
+                // console.log(describeState(result));
+                console.log(descripePrettyLine(state.x, state.y, result.x, result.y));
+
+                return result;
             },
 
             'f': (state, deltaXY) => {
@@ -91,15 +102,7 @@ class Interpreter {
         self.stack.push({ ...turtle.state });
 
         for (let token of string) {
-
             self.stack[ self.stack.length - 1 ] = self.interpret({ state: self.stack[ self.stack.length - 1 ], command: token, delta: ('F' === token ? delta : alpha) });
-
-            let str = describeState(self.stack[ self.stack.length - 1 ]);
-
-            if ('F' === token) {
-                console.log(str);
-            }
-
         }
 
     }
