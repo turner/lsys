@@ -45,16 +45,14 @@ class Interpreter {
     constructor() {
         let self = this;
 
-        this.tokens = new Set([ 'F', 'f', '+', '-', '[', ']' ]);
-
         this.stack = new Stack();
 
         this.commands = {
+
             'F': (state, deltaXY) => {
 
                 let result = Interpreter.translate(state, deltaXY);
 
-                // console.log(describeState(result));
                 console.log(descripePrettyLine(state.x, state.y, result.x, result.y));
 
                 return result;
@@ -72,7 +70,7 @@ class Interpreter {
                 return Interpreter.rotate(state, -deltaAlpha);
             },
 
-            '[': (state, delta) => {
+            '[': (state, ignore) => {
 
                 let str = 'push(' + describeState(state) + ')';
                 console.log(str);
@@ -82,7 +80,7 @@ class Interpreter {
                 return self.stack.top();
             },
 
-            ']': (state, delta) => {
+            ']': (ignore_0, ignore_1) => {
 
                 let dev_null = self.stack.pop();
 
@@ -92,10 +90,11 @@ class Interpreter {
                 return self.stack.top();
             }
 
-        }
+        };
+
+        this.tokens = new Set(Object.keys(this.commands));
 
     }
-
 
     interpretString ({ turtle, string, delta, alpha }) {
         let self = this;
@@ -143,7 +142,6 @@ class Interpreter {
 
         return newState;
     }
-
 
 }
 
