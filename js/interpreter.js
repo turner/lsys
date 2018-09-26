@@ -77,7 +77,7 @@ class Interpreter {
 
                 self.stack.push({ ...state });
 
-                return self.stack.top();
+                return state;
             },
 
             ']': (ignore_0, ignore_1) => {
