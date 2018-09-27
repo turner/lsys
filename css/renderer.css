@@ -1,0 +1,13 @@
+body {
+  background-color: #efefef; }
+
+#root-container {
+  margin: 8px;
+  width: 700px;
+  height: 700px;
+  background-color: transparent; }
+
+svg {
+  background-color: gainsboro; }
+
+/*# sourceMappingURL=renderer.css.map */

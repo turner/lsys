@@ -14,10 +14,10 @@ body {
   width: $container-width;
   height: $container-height;
 
-  background-color: aquamarine;
+  //background-color: red;
+  background-color: transparent;
 }
 
-.svg-container {
-  background-color: $default-grey-color;
+svg {
+  background-color: gainsboro;
 }
-

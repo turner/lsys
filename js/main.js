@@ -24,8 +24,11 @@
 import Turtle from './turtle.js';
 import Generator from './generator.js';
 import Interpreter from './interpreter.js'
+import Renderer from './renderer.js';
 
 export let main = ($container, { axiom, productions }) => {
+
+    let renderer = new Renderer($container);
 
     let ping,
         pong;
@@ -37,7 +40,7 @@ export let main = ($container, { axiom, productions }) => {
     let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
 
     describeStringGeneration(axiom);
-    interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: 4, alpha: 90 });
+    interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.drawingDimension(), alpha: 90 });
 
     // ping = generator.rewrite(axiom);
 
@@ -45,20 +48,6 @@ export let main = ($container, { axiom, productions }) => {
     // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: 4, alpha: 90 });
 
 
-    let svg = SVG($container.get(0)).size($container.width(), $container.height());
-
-    let root_group = svg.group().transform({ x:0.05 * $container.width(), y:0.05 * $container.height() });
-
-    let dimen = 0.9 * $container.width();
-    let root = svg.rect(dimen, dimen).attr( { fill:'yellow' } );
-    root_group.add(root);
-
-    let radius = 8;
-    let origin_group = svg.group().transform({ x:dimen/2, y:(dimen-radius) });
-    let origin = svg.circle(2 * radius).attr( { fill:'red', 'stroke':"grey", 'stroke-width':2 });
-
-    origin_group.add(origin);
-    root_group.add(origin_group);
 
 };
 
