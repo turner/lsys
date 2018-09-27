@@ -18,37 +18,38 @@ class Renderer {
 
         canvas.attr( { fill:'white' } );
 
-        let drawing_origin_group = this.svg.group();
-        root_group.add(drawing_origin_group);
+        this.drawing_origin_group = this.svg.group();
+        root_group.add(this.drawing_origin_group);
 
-        // drawing_origin_group.transform({ x:this.canvas_dimension/2, y:(this.canvas_dimension-radius) });
-        drawing_origin_group.transform({ x:this.canvas_dimension/2, y:this.canvas_dimension/2 });
+        this.drawing_origin_group.transform({ x:this.canvas_dimension/5, y:this.canvas_dimension/5 });
 
         // svg.circle(diameter)
         let origin = this.svg.circle();
-        drawing_origin_group.add(origin);
+        this.drawing_origin_group.add(origin);
 
         let radius = 8;
         origin.radius(radius);
 
         origin.attr( { fill:'gainsboro', 'stroke':'dimgray', 'stroke-width':1 });
 
-        drawing_origin_group.add(this.drawLine(0, 0, this.canvas_dimension/4, -this.canvas_dimension/3));
+        // test
+        // this.drawLine(0, 0, this.canvas_dimension/4, -this.canvas_dimension/3);
 
     }
 
     drawLine (xStart, yStart, xEnd, yEnd) {
 
-        const line_width = 4;
+        const line_width = 2;
         const line = this.svg.line(xStart, yStart, xEnd, yEnd);
 
         line.stroke({ color:'red', width:line_width, linecap:'round' });
 
-        return line;
+        this.drawing_origin_group.add(line);
+
      }
 
     drawingDimension () {
-        return this.canvas_dimension / 32.0;
+        return this.canvas_dimension / 10.0;
     }
 
 }

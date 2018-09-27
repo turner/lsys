@@ -42,7 +42,8 @@ let descripePrettyLine = (x0, y0, x1, y1) => {
 
 class Interpreter {
 
-    constructor() {
+    constructor(renderer) {
+
         let self = this;
 
         this.stack = new Stack();
@@ -53,7 +54,7 @@ class Interpreter {
 
                 let result = Interpreter.translate(state, deltaXY);
 
-                console.log(descripePrettyLine(state.x, state.y, result.x, result.y));
+                renderer.drawLine(state.x, state.y, result.x, result.y);
 
                 return result;
             },

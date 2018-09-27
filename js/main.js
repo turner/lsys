@@ -35,17 +35,18 @@ export let main = ($container, { axiom, productions }) => {
 
     let generator = new Generator(productions);
 
-    let interpreter = new Interpreter();
+    let interpreter = new Interpreter(renderer);
 
-    let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
+    let turtle = new Turtle({ x: 0, y: 0, alpha: 90 });
 
-    describeStringGeneration(axiom);
-    interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.drawingDimension(), alpha: 90 });
+    // describeStringGeneration(axiom);
+    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/4, alpha: 90 });
 
-    // ping = generator.rewrite(axiom);
+    ping = generator.rewrite(axiom);
+    pong = generator.rewrite(ping);
 
     // describeStringGeneration(ping);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: 4, alpha: 90 });
+    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/32, alpha: 90 });
 
 
 
