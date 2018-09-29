@@ -39,23 +39,20 @@ export let main = ($container, { axiom, productions }) => {
 
     let turtle = new Turtle({ x: 0, y: 0, alpha: 90 });
 
-    // describeStringGeneration(axiom);
-    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/4, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/8, alpha: 90 });
 
     ping = generator.rewrite(axiom);
     pong = generator.rewrite(ping);
-
-    // describeStringGeneration(ping);
-    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/32, alpha: 90 });
-
-
+    ping = generator.rewrite(pong);
+    pong = generator.rewrite(ping);
+    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/128, alpha: 90 });
 
 };
 
 let  describeStringGeneration = ({ string, generation }) => {
 
-    let draw_calls = string.split(/[^A-Za-z]/).join('');
+    // let draw_calls = string.split(/[^A-Za-z]/).join('');
 
-    console.log('generation ' + generation + ' ' + string + ' draw calls ' + draw_calls.length);
+    console.log('generation ' + generation + ' ' + string);
 
 };

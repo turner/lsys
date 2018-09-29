@@ -27,6 +27,16 @@ class Generator {
         this.productions = productions;
     }
 
+    rewriteRegEx({ string, generation }) {
+
+        let rewritten = string.slice(0);
+        this.productions.forEach((production) => {
+            rewritten = production(rewritten);
+        });
+
+        return { string: rewritten, generation: (1 + generation) }
+    }
+
     rewrite({ string, generation }) {
         let self = this,
             list;

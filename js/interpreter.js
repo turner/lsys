@@ -59,6 +59,24 @@ class Interpreter {
                 return result;
             },
 
+            'Fr': (state, deltaXY) => {
+
+                let result = Interpreter.translate(state, deltaXY);
+
+                renderer.drawLine(state.x, state.y, result.x, result.y);
+
+                return result;
+            },
+
+            'Fl': (state, deltaXY) => {
+
+                let result = Interpreter.translate(state, deltaXY);
+
+                renderer.drawLine(state.x, state.y, result.x, result.y);
+
+                return result;
+            },
+
             'f': (state, deltaXY) => {
                 return Interpreter.translate(state, deltaXY);
             },
