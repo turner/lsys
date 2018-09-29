@@ -38,12 +38,10 @@
 
 <script type="module">
 
-    import { main } from './js/main.js';
-    import { production } from "./js/productions/10d.js";
-    // import { production } from "./js/productions/edge_rewriting/dragon_curve.js";
+    import { main } from './js/productions/edge_rewriting/main.js';
+    import { production } from "./js/productions/edge_rewriting/sierpinski_gasket.js";
 
     $(document).ready(function () {
-
         main($('#root-container'), production);
     });
 

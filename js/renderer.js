@@ -21,7 +21,7 @@ class Renderer {
         this.drawing_origin_group = this.svg.group();
         root_group.add(this.drawing_origin_group);
 
-        this.drawing_origin_group.transform({ x:this.canvas_dimension/16, y:this.canvas_dimension/16 });
+        this.drawing_origin_group.transform({ x:this.canvas_dimension * .9, y:this.canvas_dimension * .1 });
 
         // svg.circle(diameter)
         let origin = this.svg.circle();
@@ -39,7 +39,7 @@ class Renderer {
 
     drawLine (xStart, yStart, xEnd, yEnd) {
 
-        const line_width = 2;
+        const line_width = 1;
         const line = this.svg.line(xStart, yStart, xEnd, yEnd);
 
         line.stroke({ color:'red', width:line_width, linecap:'round' });

@@ -27,14 +27,21 @@ class Generator {
         this.productions = productions;
     }
 
-    rewriteRegEx({ string, generation }) {
+    edgeRewrite({string, generation}) {
 
-        let rewritten = string.slice(0);
-        this.productions.forEach((production) => {
-            rewritten = production(rewritten);
+        let self = this,
+            rewritten,
+            parts,
+            list;
+
+
+        rewritten = string.slice(0);
+        Object.keys(self.productions).forEach((key) => {
+            rewritten = rewritten.replace(new RegExp(key, 'g'), self.productions[ key ]);
         });
 
-        return { string: rewritten, generation: (1 + generation) }
+        rewritten = rewritten.split('#').join('');
+        return { string: rewritten, generation: (1 + generation) };
     }
 
     rewrite({ string, generation }) {

@@ -21,10 +21,10 @@
  *
  */
 
-import Turtle from './turtle.js';
-import Generator from './generator.js';
-import Interpreter from './interpreter.js'
-import Renderer from './renderer.js';
+import Turtle from '../turtle.js';
+import Generator from '../generator.js';
+import Interpreter from '../interpreter.js'
+import Renderer from '../renderer.js';
 
 export let main = ($container, { axiom, productions }) => {
 

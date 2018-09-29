@@ -1,19 +1,19 @@
 // See:
 // The Algorithmic Beauty of Plants
-// page 11, example a
+// page 11, example b
 // P. Prusinkiewicz and A. Lindenmayer
 
 export const production =
     {
         axiom:
             {
-                string: 'Fl',
+                string: 'Fr',
                 generation: 0
             },
         productions:
             {
-                Fl: 'F#l+F#r+',
-                Fr: '-F#l-F#r'
+                Fl: 'F#r+F#l+F#r',
+                Fr: 'F#l-F#r-F#l'
             },
         // _productions:
         //     [
