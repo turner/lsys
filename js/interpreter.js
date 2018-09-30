@@ -82,11 +82,11 @@ class Interpreter {
             },
 
             '+': (state, deltaAlpha) => {
-                return Interpreter.rotate(state, deltaAlpha);
+                return Interpreter.rotate(state, -deltaAlpha);
             },
 
             '-': (state, deltaAlpha) => {
-                return Interpreter.rotate(state, -deltaAlpha);
+                return Interpreter.rotate(state, deltaAlpha);
             },
 
             '[': (state, ignore) => {

@@ -37,8 +37,7 @@ export let main = ($container, { axiom, productions, angle }) => {
 
     let interpreter = new Interpreter(renderer);
 
-    let turtle = new Turtle({ x: 0, y: 0, alpha: 90 });
-
+    let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
 
     ping = generator.rewrite(axiom);
     pong = generator.rewrite(ping);
@@ -47,7 +46,7 @@ export let main = ($container, { axiom, productions, angle }) => {
 
     // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/4, alpha: angle });
     // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: angle });
-    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/8, alpha: angle });
+    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/64, alpha: angle });
 
 };
 
