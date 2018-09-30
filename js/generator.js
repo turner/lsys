@@ -32,12 +32,15 @@ class Generator {
         let self = this,
             rewritten;
 
+        const mark = '#';
         rewritten = Object.keys(this.productions)
             .reduce((accumulator, key) => {
-                return accumulator.replace(new RegExp(key, 'g'), self.productions[ key ]);
+                let production = self.productions[ key ];
+                let cooked = production.split('').join(mark);
+                return accumulator.replace(new RegExp(key, 'g'), cooked);
             }, string);
 
-        return { string: rewritten.split('#').join(''), generation: (1 + generation) };
+        return { string: rewritten.split(mark).join(''), generation: (1 + generation) };
     }
 
     rewrite({ string, generation }) {

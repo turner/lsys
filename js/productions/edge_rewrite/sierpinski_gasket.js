@@ -14,7 +14,7 @@ export const production =
             },
         productions:
             {
-                Fl: 'F#r+F#l+F#r',
-                Fr: 'F#l-F#r-F#l'
+                Fl: 'Fr+Fl+Fr',
+                Fr: 'Fl-Fr-Fl'
             }
     };
