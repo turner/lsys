@@ -21,7 +21,7 @@ class Renderer {
         this.drawing_origin_group = this.svg.group();
         root_group.add(this.drawing_origin_group);
 
-        this.drawing_origin_group.transform({ x:this.canvas_dimension * .25, y:this.canvas_dimension * .25 });
+        this.drawing_origin_group.transform({ x:this.canvas_dimension * .75, y:this.canvas_dimension * .5 });
 
         // svg.circle(diameter)
         let origin = this.svg.circle();

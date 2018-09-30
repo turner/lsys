@@ -16,18 +16,5 @@ export const production =
             {
                 Fl: 'F#l+F#r+',
                 Fr: '-F#l-F#r'
-            },
-        // _productions:
-        //     [
-        //
-        //         (string) => {
-        //             return string.replace(new RegExp('Fl', 'g'), 'Fl+Fr+');
-        //         },
-        //
-        //         (string) => {
-        //             return string.replace(new RegExp('Fr', 'g'), '-Fl-Fr');
-        //         }
-        //
-        //
-        //     ]
+            }
     };

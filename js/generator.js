@@ -30,18 +30,14 @@ class Generator {
     edgeRewrite({string, generation}) {
 
         let self = this,
-            rewritten,
-            parts,
-            list;
+            rewritten;
 
+        rewritten = Object.keys(this.productions)
+            .reduce((accumulator, key) => {
+                return accumulator.replace(new RegExp(key, 'g'), self.productions[ key ]);
+            }, string);
 
-        rewritten = string.slice(0);
-        Object.keys(self.productions).forEach((key) => {
-            rewritten = rewritten.replace(new RegExp(key, 'g'), self.productions[ key ]);
-        });
-
-        rewritten = rewritten.split('#').join('');
-        return { string: rewritten, generation: (1 + generation) };
+        return { string: rewritten.split('#').join(''), generation: (1 + generation) };
     }
 
     rewrite({ string, generation }) {

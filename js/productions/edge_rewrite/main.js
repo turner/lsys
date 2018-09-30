@@ -37,55 +37,55 @@ export let main = ($container, { angle, axiom, productions }) => {
 
     let interpreter = new Interpreter(renderer);
 
-    let turtle = new Turtle({ x: 0, y: 0, alpha: 60 });
+    let turtle = new Turtle({ x: 0, y: 0, alpha: angle });
 
-    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/8, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/8, alpha: angle });
     describeStringGeneration(axiom);
 
     ping = generator.edgeRewrite(axiom);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: angle });
     describeStringGeneration(ping);
 
     pong = generator.edgeRewrite(ping);
-    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/16, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/16, alpha: angle });
     describeStringGeneration(pong);
 
     ping = generator.edgeRewrite(pong);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: angle });
     describeStringGeneration(ping);
 
     pong = generator.edgeRewrite(ping);
-    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/16, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/16, alpha: angle });
     describeStringGeneration(pong);
 
     ping = generator.edgeRewrite(pong);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/32, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/32, alpha: angle });
+    describeStringGeneration(ping);
+
+    pong = generator.edgeRewrite(ping);
+    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/64, alpha: angle });
+    describeStringGeneration(pong);
+
+
+
+    ping = generator.edgeRewrite(pong);
+    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/32, alpha: angle });
+    describeStringGeneration(ping);
+
+    pong = generator.edgeRewrite(ping);
+    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/16, alpha: angle });
+    describeStringGeneration(pong);
+
+    ping = generator.edgeRewrite(pong);
+    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/32, alpha: angle });
     describeStringGeneration(ping);
 
     pong = generator.edgeRewrite(ping);
     interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/64, alpha: angle });
     describeStringGeneration(pong);
 
-    return;
-
     ping = generator.edgeRewrite(pong);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/32, alpha: 90 });
-    describeStringGeneration(ping);
-
-    pong = generator.edgeRewrite(ping);
-    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/16, alpha: 90 });
-    describeStringGeneration(pong);
-
-    ping = generator.edgeRewrite(pong);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/32, alpha: 90 });
-    describeStringGeneration(ping);
-
-    pong = generator.edgeRewrite(ping);
-    // interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/16, alpha: 90 });
-    describeStringGeneration(pong);
-
-    ping = generator.edgeRewrite(pong);
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/128, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/64, alpha: angle });
     describeStringGeneration(ping);
 
 };
