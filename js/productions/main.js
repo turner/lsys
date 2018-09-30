@@ -26,7 +26,7 @@ import Generator from '../generator.js';
 import Interpreter from '../interpreter.js'
 import Renderer from '../renderer.js';
 
-export let main = ($container, { axiom, productions }) => {
+export let main = ($container, { axiom, productions, angle }) => {
 
     let renderer = new Renderer($container);
 
@@ -41,13 +41,13 @@ export let main = ($container, { axiom, productions }) => {
 
 
     ping = generator.rewrite(axiom);
-
     pong = generator.rewrite(ping);
     ping = generator.rewrite(pong);
     pong = generator.rewrite(ping);
 
-    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/8, alpha: 90 });
-    interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/128, alpha: 90 });
+    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/4, alpha: angle });
+    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: angle });
+    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/8, alpha: angle });
 
 };
 

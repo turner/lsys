@@ -91,9 +91,6 @@ class Interpreter {
 
             '[': (state, ignore) => {
 
-                let str = 'push(' + describeState(state) + ')';
-                console.log(str);
-
                 self.stack.push({ ...state });
 
                 return state;
@@ -101,10 +98,7 @@ class Interpreter {
 
             ']': (ignore_0, ignore_1) => {
 
-                let dev_null = self.stack.pop();
-
-                let str = 'pop(' + describeState(dev_null) + ')';
-                console.log(str);
+                self.stack.pop();
 
                 return self.stack.top();
             }
