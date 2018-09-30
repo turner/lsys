@@ -5,6 +5,8 @@
 
 export const production =
     {
+        angle: 90,
+
         axiom:
             {
                 string: 'Fl',

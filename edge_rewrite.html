@@ -38,13 +38,10 @@
 
 <script type="module">
 
-    import { main } from './js/re.js';
-    import { production } from "./js/productions/node_rewriting/d.js";
-    // import { production } from "./js/productions/push_pop_test.js";
-    // import { production } from "./js/productions/axial_tree.js";
+    import { main } from './js/productions/edge_rewrite/main.js';
+    import { production } from "./js/productions/edge_rewrite/sierpinski_gasket.js";
 
     $(document).ready(function () {
-
         main($('#root-container'), production);
     });
 
