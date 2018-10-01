@@ -32,17 +32,20 @@ class Generator {
         let self = this,
             rewritten;
 
-        const mark = 'q';
+        const guard = 'q';
         rewritten = Object.keys(this.productions)
             .reduce((accumulator, key) => {
                 let production = self.productions[ key ];
-                let re = key + '(?!' + mark + ')';
-                let cooked = production.split('').join(mark);
+                let re = key + '(?!' + guard + ')';
+
+                // insert the guard in the replacement so as not to have the replacement
+                // recognized by successive productions
+                let cooked = production.split('').join(guard) + guard;
 
                 return accumulator.replace(new RegExp(re, 'g'), cooked);
             }, string);
 
-        return { string: rewritten.split(mark).join(''), generation: (1 + generation) };
+        return { string: rewritten.split(guard).join(''), generation: (1 + generation) };
     }
 
     rewrite({ string, generation }) {
