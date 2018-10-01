@@ -64,7 +64,7 @@ export let main = ($container, { angle, axiom, productions }) => {
 
     // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/4, alpha: angle });
     // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: angle });
-    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/380, alpha: angle });
+    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/200, alpha: angle });
 
 };
 
