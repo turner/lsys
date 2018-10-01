@@ -21,7 +21,8 @@ class Renderer {
         this.drawing_origin_group = this.svg.group();
         root_group.add(this.drawing_origin_group);
 
-        this.drawing_origin_group.transform({ x:this.canvas_dimension * .5, y:this.canvas_dimension * (1.0 - .0625) });
+        this.drawing_origin_group.transform({ x:this.canvas_dimension * .0625, y:this.canvas_dimension * (1.0 - .0625) });
+        // this.drawing_origin_group.transform({ x:this.canvas_dimension * .5, y:this.canvas_dimension * (1.0 - .0625) });
         // this.drawing_origin_group.transform({ x:this.canvas_dimension * .5, y:this.canvas_dimension * .5 });
 
 
