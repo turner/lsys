@@ -1,11 +1,11 @@
 // See:
 // The Algorithmic Beauty of Plants
-// page 25, example f
+// page 25, example d
 // P. Prusinkiewicz and A. Lindenmayer
 
 export const production =
     {
-        angle: 22.5,
+        angle: 20,
 
         axiom:
             {
@@ -14,7 +14,7 @@ export const production =
             },
         productions:
             {
-                X: 'F-[[X]+X]+F[+FX]-X',
+                X: 'F[+X]F[-X]+X',
                 F: 'FF'
             }
     };
