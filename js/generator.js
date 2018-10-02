@@ -29,23 +29,23 @@ class Generator {
 
     edgeRewrite({string, generation}) {
 
-        let self = this,
-            rewritten;
+        let self = this;
 
-        const guard = 'q';
-        rewritten = Object.keys(this.productions)
-            .reduce((accumulator, key) => {
-                let production = self.productions[ key ];
-                let re = key + '(?!' + guard + ')';
+        // single letter key
+        // const pattern = '[' + Object.keys(this.productions).join('') + ']';
 
-                // insert the guard in the replacement so as not to have the replacement
-                // recognized by successive productions
-                let cooked = production.split('').join(guard) + guard;
+        // multi-letter key. also works for single letter key
+        const pattern = Object.keys(this.productions).join('|');
 
-                return accumulator.replace(new RegExp(re, 'g'), cooked);
-            }, string);
+        const regex = new RegExp(pattern, 'g');
 
-        return { string: rewritten.split(guard).join(''), generation: (1 + generation) };
+        const doProduction = (s) => {
+            return s.replace(regex, (match) => {
+                return self.productions[ match ];
+            });
+        };
+
+        return { string: doProduction(string), generation: (1 + generation) };
     }
 
     rewrite({ string, generation }) {
