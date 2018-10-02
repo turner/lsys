@@ -21,12 +21,12 @@
  *
  */
 
-import Turtle from '../turtle.js';
-import Generator from '../generator.js';
-import Interpreter from '../interpreter.js'
-import Renderer from '../renderer.js';
+import Turtle from './turtle.js';
+import Generator from './generator.js';
+import Interpreter from './interpreter.js'
+import Renderer from './renderer.js';
 
-export let main = ($container, { axiom, productions, angle }) => {
+export let main = ($container, { angle, axiom, productions }) => {
 
     let renderer = new Renderer($container);
 
@@ -37,12 +37,30 @@ export let main = ($container, { axiom, productions, angle }) => {
 
     let interpreter = new Interpreter(renderer);
 
-    let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
+    let turtle = new Turtle({ x: 0, y: 0, alpha: -60 });
+
+    describeStringGeneration(axiom);
 
     ping = generator.rewrite(axiom);
+    describeStringGeneration(ping);
+
     pong = generator.rewrite(ping);
+    describeStringGeneration(pong);
+
     ping = generator.rewrite(pong);
+    describeStringGeneration(ping);
+
     pong = generator.rewrite(ping);
+    describeStringGeneration(pong);
+
+    pong = generator.rewrite(ping);
+    describeStringGeneration(pong);
+
+    ping = generator.rewrite(pong);
+    describeStringGeneration(ping);
+
+    pong = generator.rewrite(ping);
+    describeStringGeneration(pong);
 
     // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/4, alpha: angle });
     // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: angle });

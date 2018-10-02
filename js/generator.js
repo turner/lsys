@@ -27,7 +27,7 @@ class Generator {
         this.productions = productions;
     }
 
-    edgeRewrite({string, generation}) {
+    rewrite({string, generation}) {
 
         let self = this;
 
@@ -47,21 +47,6 @@ class Generator {
 
         return { string: doProduction(string), generation: (1 + generation) };
     }
-
-    rewrite({ string, generation }) {
-        let self = this,
-            list;
-
-        list = string.split('')
-            .reduce((accumulator, letter) => {
-                let replacement = self.productions[ letter ] || letter;
-                accumulator.push( replacement );
-                return accumulator;
-            }, []);
-
-        return { string: list.join(''), generation: (1 + generation) };
-    }
-
 }
 
 export default Generator;

@@ -38,11 +38,16 @@
 
 <script type="module">
 
-    import { main } from './js/productions/main.js';
+    import { main } from './js/main.js';
 
     // import { production } from "./js/productions/quadratic_koch_island.js";
-    // import { production } from "./js/productions/axial_tree.js";
-    import { production } from "./js/productions/25c.js";
+    // import { production } from "./js/productions/25c.js";
+
+    // edge rewrite
+    import { production } from "./js/productions/edge_rewrite/sierpinski_gasket.js";
+    // import { production } from "./js/productions/edge_rewrite/dragon_curve.js";
+    // import { production } from "./js/productions/edge_rewrite/25f.js";
+    // import { production } from "./js/productions/edge_rewrite/hilbert_curve.js";
 
     $(document).ready(function () {
         main($('#root-container'), production);
