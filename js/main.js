@@ -41,30 +41,15 @@ export let main = ($container, { angle, axiom, productions }) => {
 
     describeStringGeneration(axiom);
 
-    ping = generator.rewrite(axiom);
-    describeStringGeneration(ping);
+    // 8 generations
+    let generation = Array.from(new Array(8), (x, i) => i)
+        .reduce((accumulator) => {
+            const acc = generator.rewrite(accumulator);
+            describeStringGeneration(acc);
+            return acc;
+        }, axiom);
 
-    pong = generator.rewrite(ping);
-    describeStringGeneration(pong);
-
-    ping = generator.rewrite(pong);
-    describeStringGeneration(ping);
-
-    pong = generator.rewrite(ping);
-    describeStringGeneration(pong);
-
-    pong = generator.rewrite(ping);
-    describeStringGeneration(pong);
-
-    ping = generator.rewrite(pong);
-    describeStringGeneration(ping);
-
-    pong = generator.rewrite(ping);
-    describeStringGeneration(pong);
-
-    // interpreter.interpretString({ turtle: turtle, string: axiom.string, delta: renderer.canvas_dimension/4, alpha: angle });
-    // interpreter.interpretString({ turtle: turtle, string: ping.string, delta: renderer.canvas_dimension/8, alpha: angle });
-    interpreter.interpretString({ turtle: turtle, string: pong.string, delta: renderer.canvas_dimension/150, alpha: angle });
+    interpreter.interpretString({ turtle: turtle, string: generation.string, delta: renderer.canvas_dimension/600, alpha: angle });
 
 };
 
