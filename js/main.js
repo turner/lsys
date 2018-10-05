@@ -30,9 +30,6 @@ export let main = ($container, { angle, axiom, productions }) => {
 
     let renderer = new Renderer($container);
 
-    let ping,
-        pong;
-
     let generator = new Generator(productions);
 
     let interpreter = new Interpreter(renderer);
@@ -42,14 +39,14 @@ export let main = ($container, { angle, axiom, productions }) => {
     describeStringGeneration(axiom);
 
     // 8 generations
-    let generation = Array.from(new Array(8), (x, i) => i)
+    let result = Array.from(new Array(9), (x, i) => i)
         .reduce((accumulator) => {
             const acc = generator.rewrite(accumulator);
             describeStringGeneration(acc);
             return acc;
         }, axiom);
 
-    interpreter.interpretString({ turtle: turtle, string: generation.string, delta: renderer.canvas_dimension/600, alpha: angle });
+    interpreter.interpretString({ turtle: turtle, string: result.string, delta: (0.9 * renderer.canvas_dimension) / Math.pow(2, (1 + result.generation)), alpha: angle });
 
 };
 

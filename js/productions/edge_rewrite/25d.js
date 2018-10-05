@@ -5,7 +5,8 @@
 
 export const production =
     {
-        angle: 20,
+        // angle: 20,
+        angle: 25,
 
         axiom:
             {
