@@ -94,7 +94,7 @@ class Interpreter {
                 // push a clone of current state
                 self.stack.push({ ...state });
 
-                renderer.pushGroupAtXY(state.x, state.y);
+                renderer.pushGroupWithTranslation(state.x, state.y);
 
                 return state;
             },
