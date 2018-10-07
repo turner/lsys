@@ -10,7 +10,7 @@ export const production =
             },
         productions:
             {
-                X: 'F[+X]+F',
+                X: 'F[+X]+F-F',
                 F: 'FF'
             }
 

@@ -82,13 +82,16 @@ class Renderer {
         let top = this.groupStack.top();
         console.log('top(' + Math.round(top.x) + ', ' + Math.round(top.y) + ')');
 
-        const dx = xEnd - top.x;
-        const dy = yEnd - top.y;
+        const a = xStart - top.x;
+        const b = yStart - top.y;
 
-        const line = this.svg.line(top.x, top.y, dx, dy);
+        const c = xEnd - top.x;
+        const d = yEnd - top.y;
+
+        const line = this.svg.line(a, b, c, d);
         top.group.add(line);
 
-        console.log('draw line(' + Math.round(top.x) + ', ' + Math.round(top.y) + ', '  + Math.round(dx) + ', ' + Math.round(dy) + ')');
+        // console.log('draw line(' + Math.round(a) + ', ' + Math.round(b) + ', '  + Math.round(c) + ', ' + Math.round(d) + ')');
 
         // const line = this.svg.line(xStart, yStart, xEnd, yEnd);
         // this.origin_group.add(line);
