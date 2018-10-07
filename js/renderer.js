@@ -1,3 +1,5 @@
+import Stack from "./stack.js";
+
 class Renderer {
     constructor($container) {
 
@@ -11,6 +13,7 @@ class Renderer {
         let margin = 0.05;
         root_group.transform({ x:margin * svg_dimension, y:margin * svg_dimension });
 
+
         this.canvas_dimension = 0.9 * $container.width();
 
         let canvas = this.svg.rect(this.canvas_dimension, this.canvas_dimension);
@@ -18,36 +21,83 @@ class Renderer {
 
         canvas.attr( { fill:'white' } );
 
-        this.drawing_origin_group = this.svg.group();
-        root_group.add(this.drawing_origin_group);
+        this.origin_group = this.svg.group();
+        root_group.add(this.origin_group);
 
-        // this.drawing_origin_group.transform({ x:this.canvas_dimension * .0625, y:this.canvas_dimension * (1.0 - .0625) });
-        this.drawing_origin_group.transform({ x:this.canvas_dimension * .5, y:this.canvas_dimension * (1.0 - .0625) });
-        // this.drawing_origin_group.transform({ x:this.canvas_dimension * .5, y:this.canvas_dimension * .5 });
+        // const xy = { x:0, y:0 };
+        // const xy = { x:this.canvas_dimension * .0625, y:this.canvas_dimension * (1.0 - .0625) };
+        const xy = { x:this.canvas_dimension * .5, y:this.canvas_dimension * (1.0 - .0625) };
+        // const xy = { x:this.canvas_dimension * .5, y:this.canvas_dimension * .5 };
+
+        // this.origin_group.transform({ x:0, y:0 });
+        // this.origin_group.transform({ x:this.canvas_dimension * .0625, y:this.canvas_dimension * (1.0 - .0625) });
+        this.origin_group.transform(xy);
+        // this.origin_group.transform({ x:this.canvas_dimension * .5, y:this.canvas_dimension * .5 });
 
 
         // svg.circle(diameter)
         let origin = this.svg.circle();
-        this.drawing_origin_group.add(origin);
+        this.origin_group.add(origin);
 
         let radius = 8;
         origin.radius(radius);
 
-        origin.attr( { fill:'gainsboro', 'stroke':'dimgray', 'stroke-width':1 });
+        origin.attr( { fill:'rgba(128, 128, 128, 0.25)', 'stroke':'dimgray', 'stroke-width':1 });
 
-        // test
-        // this.drawLine(0, 0, this.canvas_dimension/4, -this.canvas_dimension/3);
+        // we will stack groups to keep track of the hierarchy
+        this.groupStack = new Stack();
+        this.groupStack.push({ x: 0, y: 0, group: this.origin_group });
 
     }
 
+    pushGroupAtXY(x, y) {
+
+        // get the stack top group
+        let top = this.groupStack.top();
+
+        // create a new group
+        let group = this.svg.group();
+
+        // position the new group relative to the stack top group
+        const dx = x - top.x;
+        const dy = y - top.y;
+        group.transform({ x: dx, y: dy });
+
+        // add the new group as a child of the stack top group
+        top.group.add(group);
+
+        this.groupStack.push({ x: x, y: y, group: group });
+        console.log('renderer push(' + Math.round(this.groupStack.top().x) + ', ' + Math.round(this.groupStack.top().y) + ')');
+
+    }
+
+    popGroup() {
+        let top = this.groupStack.pop();
+        console.log('renderer pop(' + Math.round(top.x) + ', ' + Math.round(top.y) + ')');
+    }
+
+
     drawLine (xStart, yStart, xEnd, yEnd) {
 
+        let top = this.groupStack.top();
+        console.log('top(' + Math.round(top.x) + ', ' + Math.round(top.y) + ')');
+
+        const a = xStart - top.x;
+        const b = yStart - top.y;
+
+        const c = xEnd - top.x;
+        const d = yEnd - top.y;
+
+        const line = this.svg.line(a, b, c, d);
+        top.group.add(line);
+
+        // console.log('draw line(' + Math.round(a) + ', ' + Math.round(b) + ', '  + Math.round(c) + ', ' + Math.round(d) + ')');
+
+        // const line = this.svg.line(xStart, yStart, xEnd, yEnd);
+        // this.origin_group.add(line);
+
         const line_width = 1;
-        const line = this.svg.line(xStart, yStart, xEnd, yEnd);
-
-        line.stroke({ color:'red', width:line_width, linecap:'round' });
-
-        this.drawing_origin_group.add(line);
+        line.stroke({ color: 'red', width: line_width, linecap: 'round' });
 
      }
 

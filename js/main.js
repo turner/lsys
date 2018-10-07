@@ -36,15 +36,16 @@ export let main = ($container, { angle, axiom, productions }) => {
 
     let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
 
-    describeStringGeneration(axiom);
+    // describeStringGeneration(axiom);
 
     // 8 generations
-    let result = Array.from(new Array(9), (x, i) => i)
+    let result = Array.from(new Array(4), (x, i) => i)
         .reduce((accumulator) => {
             const acc = generator.rewrite(accumulator);
             describeStringGeneration(acc);
             return acc;
         }, axiom);
+    // interpreter.interpretString({ turtle: turtle, string: result.string, delta: 0.125 * renderer.canvas_dimension, alpha: angle });
 
     interpreter.interpretString({ turtle: turtle, string: result.string, delta: (0.9 * renderer.canvas_dimension) / Math.pow(2, (1 + result.generation)), alpha: angle });
 

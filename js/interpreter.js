@@ -91,7 +91,10 @@ class Interpreter {
 
             '[': (state, ignore) => {
 
+                // push a clone of current state
                 self.stack.push({ ...state });
+
+                renderer.pushGroupAtXY(state.x, state.y);
 
                 return state;
             },
@@ -99,6 +102,8 @@ class Interpreter {
             ']': (ignore_0, ignore_1) => {
 
                 self.stack.pop();
+
+                renderer.popGroup();
 
                 return self.stack.top();
             }
