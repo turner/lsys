@@ -4,11 +4,13 @@ class Renderer {
     constructor($container) {
 
         this.svg = SVG($container.get(0));
+        this.svg.attr('id', 'svg container');
 
         let svg_dimension = $container.width();
         this.svg.size(svg_dimension, svg_dimension);
 
         let root_group = this.svg.group();
+        root_group.attr('id', 'root group');
 
         let margin = 0.05;
         root_group.transform({ x:margin * svg_dimension, y:margin * svg_dimension });
@@ -23,6 +25,7 @@ class Renderer {
 
         this.origin_group = this.svg.group();
         root_group.add(this.origin_group);
+        this.origin_group.attr('id', 'origin group');
 
         // const xy = { x:0, y:0 };
         // const xy = { x:this.canvas_dimension * .0625, y:this.canvas_dimension * (1.0 - .0625) };
@@ -38,6 +41,7 @@ class Renderer {
         // svg.circle(diameter)
         let origin = this.svg.circle();
         this.origin_group.add(origin);
+        origin.attr('id', 'origin');
 
         let radius = 8;
         origin.radius(radius);
@@ -50,7 +54,7 @@ class Renderer {
 
     }
 
-    pushGroupAtXY(x, y) {
+    pushGroupWithTranslation(x, y) {
 
         // get the stack top group
         let top = this.groupStack.top();
@@ -63,11 +67,28 @@ class Renderer {
         const dy = y - top.y;
         group.transform({ x: dx, y: dy });
 
+        const str = 'joint(' + Math.round(dx) + ', ' + Math.round(dy) + ') depth(' + this.groupStack.stack.indexOf(top) + ')';
+        group.attr('id', str);
+
         // add the new group as a child of the stack top group
         top.group.add(group);
 
+        this.decorateStackGroupItem(group);
+
         this.groupStack.push({ x: x, y: y, group: group });
         // console.log('renderer push(' + Math.round(this.groupStack.top().x) + ', ' + Math.round(this.groupStack.top().y) + ')');
+
+    }
+
+    decorateStackGroupItem (group) {
+
+        let dot = this.svg.circle();
+        group.add(dot);
+
+        let radius = 8;
+        dot.radius(radius);
+
+        dot.attr( { fill:'rgba(0, 128, 0, 0.25)', 'stroke':'rgba(32, 32, 32, 0.75)', 'stroke-width':1 });
 
     }
 

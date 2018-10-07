@@ -36,25 +36,24 @@ export let main = ($container, { angle, axiom, productions }) => {
 
     let turtle = new Turtle({ x: 0, y: 0, alpha: -90 });
 
-    // describeStringGeneration(axiom);
-
     // 8 generations
-    let result = Array.from(new Array(8), (x, i) => i)
+    let result = Array.from(new Array(6), (x, i) => i)
         .reduce((accumulator) => {
             const acc = generator.rewrite(accumulator);
             describeStringGeneration(acc);
             return acc;
         }, axiom);
-    // interpreter.interpretString({ turtle: turtle, string: result.string, delta: 0.125 * renderer.canvas_dimension, alpha: angle });
+
+    // remove [+X] or [-X]
+    const match = '\\[' + '[-+]X' + '\\]';
+    const regex = new RegExp(match, 'g');
+
+    result.string = result.string.replace(regex, '');
 
     interpreter.interpretString({ turtle: turtle, string: result.string, delta: (0.9 * renderer.canvas_dimension) / Math.pow(2, (1 + result.generation)), alpha: angle });
 
 };
 
 let  describeStringGeneration = ({ string, generation }) => {
-
-    // let draw_calls = string.split(/[^A-Za-z]/).join('');
-
     console.log('generation ' + generation + ' ' + string);
-
 };
