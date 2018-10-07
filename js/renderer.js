@@ -67,20 +67,20 @@ class Renderer {
         top.group.add(group);
 
         this.groupStack.push({ x: x, y: y, group: group });
-        console.log('renderer push(' + Math.round(this.groupStack.top().x) + ', ' + Math.round(this.groupStack.top().y) + ')');
+        // console.log('renderer push(' + Math.round(this.groupStack.top().x) + ', ' + Math.round(this.groupStack.top().y) + ')');
 
     }
 
     popGroup() {
         let top = this.groupStack.pop();
-        console.log('renderer pop(' + Math.round(top.x) + ', ' + Math.round(top.y) + ')');
+        // console.log('renderer pop(' + Math.round(top.x) + ', ' + Math.round(top.y) + ')');
     }
 
 
     drawLine (xStart, yStart, xEnd, yEnd) {
 
         let top = this.groupStack.top();
-        console.log('top(' + Math.round(top.x) + ', ' + Math.round(top.y) + ')');
+        // console.log('top(' + Math.round(top.x) + ', ' + Math.round(top.y) + ')');
 
         const a = xStart - top.x;
         const b = yStart - top.y;
@@ -92,9 +92,6 @@ class Renderer {
         top.group.add(line);
 
         // console.log('draw line(' + Math.round(a) + ', ' + Math.round(b) + ', '  + Math.round(c) + ', ' + Math.round(d) + ')');
-
-        // const line = this.svg.line(xStart, yStart, xEnd, yEnd);
-        // this.origin_group.add(line);
 
         const line_width = 1;
         line.stroke({ color: 'red', width: line_width, linecap: 'round' });

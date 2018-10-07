@@ -39,7 +39,7 @@ export let main = ($container, { angle, axiom, productions }) => {
     // describeStringGeneration(axiom);
 
     // 8 generations
-    let result = Array.from(new Array(4), (x, i) => i)
+    let result = Array.from(new Array(8), (x, i) => i)
         .reduce((accumulator) => {
             const acc = generator.rewrite(accumulator);
             describeStringGeneration(acc);
