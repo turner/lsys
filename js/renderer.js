@@ -10,13 +10,15 @@ class Renderer {
         this.svg.size(svg_dimension, svg_dimension);
 
         let root_group = this.svg.group();
-        root_group.attr('id', 'root group');
+        root_group.attr('id', 'root_group');
 
-        let margin = 0.05;
+        // const margin = 0.05;
+        const margin = 0;
         root_group.transform({ x:margin * svg_dimension, y:margin * svg_dimension });
 
 
-        this.canvas_dimension = 0.9 * $container.width();
+        // this.canvas_dimension = 0.9 * $container.width();
+        this.canvas_dimension = $container.width();
 
         let canvas = this.svg.rect(this.canvas_dimension, this.canvas_dimension);
         root_group.add(canvas);
@@ -25,7 +27,7 @@ class Renderer {
 
         this.origin_group = this.svg.group();
         root_group.add(this.origin_group);
-        this.origin_group.attr('id', 'origin group');
+        this.origin_group.attr('id', 'origin_group');
 
         // const xy = { x:0, y:0 };
         // const xy = { x:this.canvas_dimension * .0625, y:this.canvas_dimension * (1.0 - .0625) };
@@ -67,7 +69,7 @@ class Renderer {
         const dy = y - top.y;
         group.transform({ x: dx, y: dy });
 
-        const str = 'joint(' + Math.round(dx) + ', ' + Math.round(dy) + ') depth(' + this.groupStack.stack.indexOf(top) + ')';
+        const str = 'joint_' + this.groupStack.stack.indexOf(top);
         group.attr('id', str);
 
         // add the new group as a child of the stack top group
@@ -83,9 +85,13 @@ class Renderer {
     decorateStackGroupItem (group) {
 
         let dot = this.svg.circle();
+
+        const str = 'joint_decoration_' + this.groupStack.stack.indexOf( this.groupStack.top() );
+        dot.attr('id', str);
+
         group.add(dot);
 
-        let radius = 8;
+        const radius = 8;
         dot.radius(radius);
 
         dot.attr( { fill:'rgba(0, 128, 0, 0.25)', 'stroke':'rgba(32, 32, 32, 0.75)', 'stroke-width':1 });
@@ -105,18 +111,19 @@ class Renderer {
 
         const a = xStart - top.x;
         const b = yStart - top.y;
-
         const c = xEnd - top.x;
         const d = yEnd - top.y;
+        let line = this.svg.line(a, b, c, d);
 
-        const line = this.svg.line(a, b, c, d);
-        top.group.add(line);
-
-        // console.log('draw line(' + Math.round(a) + ', ' + Math.round(b) + ', '  + Math.round(c) + ', ' + Math.round(d) + ')');
+        const str = 'branch_' + this.groupStack.stack.indexOf( top );
+        line.attr('id', str);
 
         const line_width = 1;
         line.stroke({ color: 'red', width: line_width, linecap: 'round' });
 
+        top.group.add(line);
+
+        // console.log('draw line(' + Math.round(a) + ', ' + Math.round(b) + ', '  + Math.round(c) + ', ' + Math.round(d) + ')');
      }
 
     drawingDimension () {
