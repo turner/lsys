@@ -37,9 +37,6 @@ let descripePrettyLine = (x0, y0, x1, y1) => {
     return 'from ' + Math.round(x0) + ' '+ Math.round(y0) + ' to ' + Math.round(x1) + ' '+ Math.round(y1);
 };
 
-// SVG line command
-// <line x1="0" y1="80" x2="100" y2="20" stroke="black" />
-
 class Interpreter {
 
     constructor(renderer) {

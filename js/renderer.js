@@ -4,7 +4,7 @@ class Renderer {
     constructor($container) {
 
         this.svg = SVG($container.get(0));
-        this.svg.attr('id', 'svg container');
+        this.svg.attr('id', 'svg_container');
 
         let svg_dimension = $container.width();
         this.svg.size(svg_dimension, svg_dimension);
@@ -69,7 +69,7 @@ class Renderer {
         const dy = y - top.y;
         group.transform({ x: dx, y: dy });
 
-        const str = 'joint_' + this.groupStack.stack.indexOf(top);
+        const str = 'joint_%' + Math.round(dx) + '%' + Math.round(dy) + '%stack_' + this.groupStack.stack.indexOf(top);
         group.attr('id', str);
 
         // add the new group as a child of the stack top group
@@ -85,10 +85,6 @@ class Renderer {
     decorateStackGroupItem (group) {
 
         let dot = this.svg.circle();
-
-        const str = 'joint_decoration_' + this.groupStack.stack.indexOf( this.groupStack.top() );
-        dot.attr('id', str);
-
         group.add(dot);
 
         const radius = 8;
@@ -114,9 +110,6 @@ class Renderer {
         const c = xEnd - top.x;
         const d = yEnd - top.y;
         let line = this.svg.line(a, b, c, d);
-
-        const str = 'branch_' + this.groupStack.stack.indexOf( top );
-        line.attr('id', str);
 
         const line_width = 1;
         line.stroke({ color: 'red', width: line_width, linecap: 'round' });
