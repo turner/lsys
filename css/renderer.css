@@ -2,9 +2,9 @@ body {
   background-color: #efefef; }
 
 #root-container {
-  margin: 128px;
-  width: 960px;
-  height: 960px;
+  margin: 16px;
+  width: 800px;
+  height: 800px;
   background-color: transparent; }
 
 svg {

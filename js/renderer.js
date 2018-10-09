@@ -12,11 +12,13 @@ class Renderer {
         let root_group = this.svg.group();
         root_group.attr('id', 'root group');
 
-        let margin = 0.05;
+        // const margin = 0.05;
+        const margin = 0;
         root_group.transform({ x:margin * svg_dimension, y:margin * svg_dimension });
 
 
-        this.canvas_dimension = 0.9 * $container.width();
+        // this.canvas_dimension = 0.9 * $container.width();
+        this.canvas_dimension = $container.width();
 
         let canvas = this.svg.rect(this.canvas_dimension, this.canvas_dimension);
         root_group.add(canvas);
