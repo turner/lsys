@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  *
  */
+import PinConstraint from './pinConstraint.js';
+
 class Composite {
     constructor () {
         this.particles = [];

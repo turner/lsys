@@ -36,7 +36,7 @@ class DistanceConstraint {
         this.b.pos.mutableSub(normal);
     }
 
-    draw = function(ctx) {
+    draw(ctx) {
         ctx.beginPath();
         ctx.moveTo(this.a.pos.x, this.a.pos.y);
         ctx.lineTo(this.b.pos.x, this.b.pos.y);

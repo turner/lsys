@@ -1,0 +1,20 @@
+$default-grey-color: #efefef;
+$container-margin: 16px;
+$container-width: 600px;
+$container-height: $container-width;
+
+body {
+  background-color: $default-grey-color;
+}
+
+#root-container {
+
+  margin: $container-margin;
+
+  width: $container-width;
+  height: $container-height;
+
+  background-color: red;
+  //background-color: transparent;
+}
+

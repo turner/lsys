@@ -20,6 +20,9 @@
  * THE SOFTWARE.
  *
  */
+
+import Vec2 from './vec2d.js';
+
 class Particle {
 
     constructor (pos) {
@@ -27,7 +30,7 @@ class Particle {
         this.lastPos = (new Vec2()).mutableSet(pos);
     }
 
-    draw = function(ctx) {
+    draw(ctx) {
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, 2, 0, 2*Math.PI);
         ctx.fillStyle = "#2dad8f";

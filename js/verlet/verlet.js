@@ -20,15 +20,35 @@
  * THE SOFTWARE.
  *
  */
+
+import Vec2 from './vec2d.js';
+import Composite from './composite.js';
+import Particle from './particle.js';
+import DistanceConstraint from './distanceConstraint.js';
+
 class Verlet {
 
-    constructor (width, height, canvas) {
+    constructor ($container) {
 
-        this.width = width;
-        this.height = height;
+        this.width = $container.width();
+        this.height = $container.height();
 
-        this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
+        this.$canvas = $('<canvas>');
+        $container.append(this.$canvas);
+
+        this.canvas = this.$canvas.get(0);
+
+        this.canvas.style.width = ($container.width() + 'px');
+        this.canvas.setAttribute('width', $container.width());
+
+        this.canvas.style.height = ($container.height() + 'px');
+        this.canvas.setAttribute('height', $container.height());
+
+        this.ctx = this.canvas.getContext("2d");
+
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
+        this.ctx.fillRect(0, 0, this.width, this.height);
+
 
         this.mouse = new Vec2(0,0);
 
@@ -77,7 +97,7 @@ class Verlet {
     }
 
     point(pos) {
-        let composite = new this.Composite();
+        let composite = new Composite();
         composite.particles.push(new Particle(pos));
         this.composites.push(composite);
         return composite;
@@ -85,7 +105,7 @@ class Verlet {
 
     lineSegments(vertices, stiffness) {
 
-        let composite = new this.Composite();
+        let composite = new Composite();
 
         for (let i in vertices) {
             composite.particles.push(new Particle(vertices[ i ]));
@@ -100,7 +120,7 @@ class Verlet {
 
     cloth(origin, width, height, segments, pinMod, stiffness) {
 
-        let composite = new this.Composite();
+        let composite = new Composite();
 
         let xStride = width/segments;
         let yStride = height/segments;
@@ -130,7 +150,7 @@ class Verlet {
 
     tire(origin, radius, segments, spokeStiffness, treadStiffness) {
 
-        let composite = new this.Composite();
+        let composite = new Composite();
 
         // particles
         let stride = (2*Math.PI)/segments;
@@ -239,7 +259,7 @@ class Verlet {
         for (let c in this.composites) {
             let particles = this.composites[c].particles;
             for (let i in particles) {
-                bounds(particles[i]);
+                bounds(particles[i].pos, this.width, this.height);
             }
         }
     }
@@ -282,15 +302,15 @@ class Verlet {
     }
 }
 
-function bounds(particle) {
-    if (particle.pos.y > this.height-1)
-        particle.pos.y = this.height-1;
+function bounds(pos, width, height) {
+    if (pos.y > height-1)
+        pos.y = height-1;
 
-    if (particle.pos.x < 0)
-        particle.pos.x = 0;
+    if (pos.x < 0)
+        pos.x = 0;
 
-    if (particle.pos.x > this.width-1)
-        particle.pos.x = this.width-1;
+    if (pos.x > width-1)
+        pos.x = width-1;
 }
 
 export default Verlet;
