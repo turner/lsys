@@ -25,9 +25,25 @@ import Vec2 from './vec2d.js';
 
 class Particle {
 
-    constructor (pos) {
-        this.pos = (new Vec2()).mutableSet(pos);
-        this.lastPos = (new Vec2()).mutableSet(pos);
+    constructor (vec2) {
+        this._pos = (new Vec2()).mutableSet(vec2);
+        this._lastPos = (new Vec2()).mutableSet(vec2);
+    }
+
+    get pos() {
+        return this._pos;
+    }
+
+    set pos(value) {
+        this._pos = value;
+    }
+
+    get lastPos() {
+        return this._lastPos;
+    }
+
+    set lastPos(value) {
+        this._lastPos = value;
     }
 
     draw(ctx) {

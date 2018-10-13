@@ -54,7 +54,7 @@ class Verlet {
 
         this.mouseDown = false;
 
-        this.draggedEntity = null;
+        this.draggedEntity = undefined;
 
         this.selectionRadius = 20;
 
@@ -77,7 +77,7 @@ class Verlet {
 
         this.canvas.onmouseup = function(e) {
             _this.mouseDown = false;
-            _this.draggedEntity = null;
+            _this.draggedEntity = undefined;
         };
 
         this.canvas.onmousemove = function(e) {
@@ -107,12 +107,20 @@ class Verlet {
 
         let composite = new Composite();
 
-        for (let i in vertices) {
-            composite.particles.push(new Particle(vertices[ i ]));
+        vertices.forEach((vertex, i) => {
+            composite.particles.push(new Particle(vertex));
             if (i > 0) {
-                composite.constraints.push(new DistanceConstraint(composite.particles[i], composite.particles[i - 1], stiffness));
+                composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[ i - 1 ], stiffness));
             }
-        }
+
+        });
+
+        // for (let i in vertices) {
+        //     composite.particles.push(new Particle(vertices[ i ]));
+        //     if (i > 0) {
+        //         composite.constraints.push(new DistanceConstraint(composite.particles[i], composite.particles[i - 1], stiffness));
+        //     }
+        // }
 
         this.composites.push(composite);
         return composite;
@@ -178,15 +186,15 @@ class Verlet {
 
         let d2Nearest = 0;
         let entity = null;
-        let constraintsNearest = null;
+        let constraintsNearest = undefined;
 
         // find nearest point
-        for (let c in this.composites) {
+        for (let  nnjhu nbhuy76c in this.composites) {
             let particles = this.composites[c].particles;
             for (let i in particles) {
                 const d2 = particles[i].pos.dist2(this.mouse);
-                if (d2 <= this.selectionRadius*this.selectionRadius && (entity == null || d2 < d2Nearest)) {
-                    entity = particles[i];
+                if (d2 <= this.selectionRadius * this.selectionRadius && (entity === undefined || d2 < d2Nearest)) {
+                    entity = particles[ i ];
                     constraintsNearest = this.composites[c].constraints;
                     d2Nearest = d2;
                 }
@@ -247,10 +255,12 @@ class Verlet {
         // relax
         const stepCoef = 1/step;
         for (let c in this.composites) {
-            let constraints = this.composites[c].constraints;
-            for (i=0;i<step;++i) {
+
+            let constraints = this.composites[ c ].constraints;
+
+            for (let i = 0; i < step; ++i) {
                 for (let j in constraints) {
-                    constraints[j].relax(stepCoef);
+                    constraints[ j ].relax(stepCoef);
                 }
             }
         }
@@ -293,6 +303,7 @@ class Verlet {
 
         // highlight nearest / dragged entity
         let nearest = this.draggedEntity || this.nearestEntity();
+
         if (nearest) {
             this.ctx.beginPath();
             this.ctx.arc(nearest.pos.x, nearest.pos.y, 8, 0, 2*Math.PI);

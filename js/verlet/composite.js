@@ -21,6 +21,7 @@
  *
  */
 import PinConstraint from './pinConstraint.js';
+import Particle from './particle.js';
 
 class Composite {
     constructor () {
@@ -31,14 +32,14 @@ class Composite {
         this.drawConstraints = null;
     }
 
-    pin (index, pos) {
+    pin (index) {
 
-        pos = pos || this.particles[index].pos;
+        let particle = this.particles[index];
 
-        let pc = new PinConstraint(this.particles[index], pos);
-        this.constraints.push(pc);
+        let pinConstraint = new PinConstraint(particle, particle.pos);
+        this.constraints.push(pinConstraint);
 
-        return pc;
+        return pinConstraint;
     }
 }
 
