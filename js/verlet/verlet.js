@@ -141,33 +141,6 @@ class Verlet {
         return composite;
     }
 
-    tire(origin, radius, segments, spokeStiffness, treadStiffness) {
-
-        let composite = new Composite();
-
-        // particles
-        const stride = (2.0 * Math.PI)/segments;
-
-        for (let i of [...Array(segments).keys()]) {
-            const theta = i * stride;
-            composite.particles.push(new Particle(new Vec2(origin.x + Math.cos(theta)*radius, origin.y + Math.sin(theta)*radius)));
-        }
-
-        let center = new Particle(origin);
-        composite.particles.push(center);
-
-        // constraints
-        for (let i of [...Array(segments).keys()]) {
-            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[(i + 1) % segments], treadStiffness));
-            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], center, spokeStiffness));
-            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[(i + 5) % segments], treadStiffness));
-        }
-
-        this.composites.push(composite);
-
-        return composite;
-    }
-
     nearestEntity() {
 
         let d2Nearest = 0;
