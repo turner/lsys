@@ -25,6 +25,7 @@ import Vec2 from './vec2d.js';
 import Composite from './composite.js';
 import Particle from './particle.js';
 import DistanceConstraint from './distanceConstraint.js';
+import PinConstraint from './pinConstraint.js';
 
 class Verlet {
 
@@ -54,7 +55,7 @@ class Verlet {
 
         this.mouseDown = false;
 
-        this.draggedEntity = undefined;
+        this.draggedEntity = null;
 
         this.selectionRadius = 20;
 
@@ -77,7 +78,7 @@ class Verlet {
 
         this.canvas.onmouseup = function(e) {
             _this.mouseDown = false;
-            _this.draggedEntity = undefined;
+            _this.draggedEntity = null;
         };
 
         this.canvas.onmousemove = function(e) {
@@ -186,14 +187,15 @@ class Verlet {
 
         let d2Nearest = 0;
         let entity = null;
-        let constraintsNearest = undefined;
-
-        // find nearest point
-        for (let  nnjhu nbhuy76c in this.composites) {
+        let constraintsNearest = null;
+        let c;
+        let i;
+        for (c in this.composites) {
             let particles = this.composites[c].particles;
-            for (let i in particles) {
-                const d2 = particles[i].pos.dist2(this.mouse);
-                if (d2 <= this.selectionRadius * this.selectionRadius && (entity === undefined || d2 < d2Nearest)) {
+            for (i in particles) {
+                let d2 = particles[i].pos.dist2(this.mouse);
+                let selectedRadius2 = this.selectionRadius * this.selectionRadius;
+                if (d2 <= selectedRadius2 && (entity === null || d2 < d2Nearest)) {
                     entity = particles[ i ];
                     constraintsNearest = this.composites[c].constraints;
                     d2Nearest = d2;
@@ -202,16 +204,14 @@ class Verlet {
         }
 
         // search for pinned constraints for this entity
-        constraintsNearest.forEach((cn) => {
-            if (cn instanceof PinConstraint && cn.a === entity) {
-                entity = cn;
+        for (i in constraintsNearest) {
+            let instance = constraintsNearest[i];
+            if (instance instanceof PinConstraint) {
+                if (entity === constraintsNearest[i].a) {
+                    entity = constraintsNearest[i]
+                }
             }
-        });
-
-        // for (i in constraintsNearest)
-        //     if (constraintsNearest[i] instanceof PinConstraint && constraintsNearest[i].a === entity) {
-        //         entity = constraintsNearest[i];
-        //     }
+        }
 
         return entity;
     }
