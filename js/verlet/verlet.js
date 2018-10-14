@@ -128,25 +128,31 @@ class Verlet {
 
         let composite = new Composite();
 
-        let xStride = width/segments;
-        let yStride = height/segments;
-        for (let y=0;y<segments;++y) {
-            for (let x=0;x<segments;++x) {
+        const xStride = width/segments;
+        const yStride = height/segments;
+
+        for (let y of [...Array(segments).keys()]) {
+            for (let x of [...Array(segments).keys()]) {
+
                 let px = origin.x + x*xStride - width/2 + xStride/2;
                 let py = origin.y + y*yStride - height/2 + yStride/2;
+
                 composite.particles.push(new Particle(new Vec2(px, py)));
 
-                if (x > 0)
-                    composite.constraints.push(new DistanceConstraint(composite.particles[y*segments+x], composite.particles[y*segments+x-1], stiffness));
+                if (x > 0) {
+                    composite.constraints.push(new DistanceConstraint(composite.particles[y * segments + x], composite.particles[y * segments + x - 1], stiffness));
+                }
 
-                if (y > 0)
-                    composite.constraints.push(new DistanceConstraint(composite.particles[y*segments+x], composite.particles[(y-1)*segments+x], stiffness));
+                if (y > 0) {
+                    composite.constraints.push(new DistanceConstraint(composite.particles[y * segments + x], composite.particles[(y - 1)*segments + x], stiffness));
+                }
             }
         }
 
-        for (let x=0;x<segments;++x) {
-            if (x % pinMod === 0)
+        for (let x of [...Array(segments).keys()]) {
+            if (x % pinMod === 0) {
                 composite.pin(x);
+            }
         }
 
         this.composites.push(composite);
@@ -159,9 +165,10 @@ class Verlet {
         let composite = new Composite();
 
         // particles
-        let stride = (2*Math.PI)/segments;
-        for (let i=0;i<segments;++i) {
-            const theta = i*stride;
+        const stride = (2.0 * Math.PI)/segments;
+
+        for (let i of [...Array(segments).keys()]) {
+            const theta = i * stride;
             composite.particles.push(new Particle(new Vec2(origin.x + Math.cos(theta)*radius, origin.y + Math.sin(theta)*radius)));
         }
 
@@ -169,10 +176,10 @@ class Verlet {
         composite.particles.push(center);
 
         // constraints
-        for (let i=0;i<segments;++i) {
-            composite.constraints.push(new DistanceConstraint(composite.particles[i], composite.particles[(i+1)%segments], treadStiffness));
-            composite.constraints.push(new DistanceConstraint(composite.particles[i], center, spokeStiffness));
-            composite.constraints.push(new DistanceConstraint(composite.particles[i], composite.particles[(i+5)%segments], treadStiffness));
+        for (let i of [...Array(segments).keys()]) {
+            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[(i + 1) % segments], treadStiffness));
+            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], center, spokeStiffness));
+            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[(i + 5) % segments], treadStiffness));
         }
 
         this.composites.push(composite);
@@ -224,6 +231,7 @@ class Verlet {
     frame(step) {
 
         for (let composite of this.composites) {
+
             for (let particle of composite.particles) {
 
                 // calculate velocity
@@ -248,6 +256,7 @@ class Verlet {
                 // inertia
                 particle.pos.mutableAdd(velocity);
             }
+
         }
 
         // handle dragging of entities
@@ -258,7 +267,7 @@ class Verlet {
         // relax
         const stepCoef = 1/step;
         for (let composite of this.composites) {
-            for (let i = 0; i < step; ++i) {
+            for (let i of [...Array(step).keys()]) {
                 for (let constraint of composite.constraints) {
                     constraint.relax(stepCoef);
                 }
