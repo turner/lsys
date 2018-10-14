@@ -52,7 +52,6 @@ class Verlet {
         this.ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-
         this.mouse = new Vec2(0,0);
 
         this.mouseDown = false;
@@ -189,30 +188,38 @@ class Verlet {
 
         let d2Nearest = 0;
         let entity = null;
-        let constraintsNearest = null;
-        let c;
-        let i;
-        for (c in this.composites) {
-            let particles = this.composites[c].particles;
-            for (i in particles) {
-                let d2 = particles[i].pos.dist2(this.mouse);
+        let nearestConstraints = null;
+        for (let composite of this.composites) {
+
+            for (let particle of composite.particles) {
+
+                let d2 = particle.pos.dist2(this.mouse);
+
                 let selectedRadius2 = this.selectionRadius * this.selectionRadius;
+
                 if (d2 <= selectedRadius2 && (entity === null || d2 < d2Nearest)) {
-                    entity = particles[ i ];
-                    constraintsNearest = this.composites[c].constraints;
+                    entity = particle;
+                    nearestConstraints = composite.constraints;
                     d2Nearest = d2;
                 }
             }
         }
 
         // search for pinned constraints for this entity
-        for (i in constraintsNearest) {
-            let instance = constraintsNearest[i];
-            if (instance instanceof PinConstraint) {
-                if (entity === constraintsNearest[i].a) {
-                    entity = constraintsNearest[i]
+        if (nearestConstraints) {
+
+            for (let nearestConstraint of nearestConstraints) {
+
+                if (nearestConstraint instanceof PinConstraint) {
+
+                    if (entity === nearestConstraint.a) {
+                        entity = nearestConstraint
+                    }
+
                 }
+
             }
+
         }
 
         return entity;

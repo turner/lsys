@@ -46,22 +46,10 @@
 
         let dimen = $root_container.width();
 
-        // let vertices =
-        //     [
-        //         new Vec2(0.25 * dimen, 0.5 * dimen),
-        //         new Vec2(0.50 * dimen, 0.5 * dimen),
-        //         new Vec2(0.75 * dimen, 0.5 * dimen)
-        //     ];
-        //
-        // let segment = simulation.lineSegments(vertices, 0.02);
-        // let a = segment.pin(0);
-        // let b = segment.pin(2);
-
         let segments = 8;
         let tire = simulation.tire(new Vec2(dimen/2, dimen/2), dimen/4, segments, 1, 1);
 
         // animation loop
-
         let requestAnimFrame = (callback) => {
             window.setTimeout(callback, 1000 / 60);
         };
