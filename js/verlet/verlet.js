@@ -105,25 +105,6 @@ class Verlet {
         return composite;
     }
 
-    lineSegments(vertices, stiffness) {
-
-        let composite = new Composite();
-
-        for (let vertex of vertices) {
-
-            composite.particles.push(new Particle(vertex));
-
-            let i = vertices.indexOf(vertex);
-            if (i > 0) {
-                composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[ i - 1 ], stiffness));
-            }
-
-        }
-
-        this.composites.push(composite);
-        return composite;
-    }
-
     cloth(origin, width, height, segments, pinMod, stiffness) {
 
         let composite = new Composite();

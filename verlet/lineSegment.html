@@ -37,12 +37,13 @@
 
     import Vec2 from '../js/verlet/vec2d.js';
     import Verlet from '../js/verlet/verlet.js'
+    import LineSegment from "../js/verlet/lineSegment.js";
 
     $(document).ready(function () {
 
         let $root_container = $('#root-container');
-        let sim = new Verlet($root_container);
-        sim.friction = 1;
+        let simulation = new Verlet($root_container);
+        simulation.friction = 1;
 
         let dimen = $root_container.width();
         let vertices =
@@ -51,9 +52,9 @@
                 new Vec2(0.50 * dimen, 0.5 * dimen),
                 new Vec2(0.75 * dimen, 0.5 * dimen)
             ];
-        let segment = sim.lineSegments(vertices, 0.02);
-        let a = segment.pin(0);
-        let b = segment.pin(2);
+        let lineSegment = new LineSegment(simulation, vertices, 0.02);
+        let a = lineSegment.pin(0);
+        let b = lineSegment.pin(2);
 
         // animation loop
 
@@ -62,8 +63,8 @@
         };
 
         let loop = () => {
-            sim.frame(16);
-            sim.draw();
+            simulation.frame(16);
+            simulation.draw();
             requestAnimFrame(loop);
         };
 
