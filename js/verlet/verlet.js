@@ -223,16 +223,14 @@ class Verlet {
 
     frame(step) {
 
-        for (let c in this.composites) {
-            for (let i in this.composites[c].particles) {
-
-                let particles = this.composites[c].particles;
+        for (let composite of this.composites) {
+            for (let particle of composite.particles) {
 
                 // calculate velocity
-                let velocity = particles[i].pos.sub(particles[i].lastPos).scale(this.friction);
+                let velocity = particle.pos.sub(particle.lastPos).scale(this.friction);
 
                 // ground friction
-                if (particles[i].pos.y >= this.height-1 && velocity.length2() > 0.000001) {
+                if (particle.pos.y >= this.height-1 && velocity.length2() > 0.000001) {
 
                     const m = velocity.length();
 
@@ -242,13 +240,13 @@ class Verlet {
                 }
 
                 // save last good state
-                particles[i].lastPos.mutableSet(particles[i].pos);
+                particle.lastPos.mutableSet(particle.pos);
 
                 // gravity
-                particles[i].pos.mutableAdd(this.gravity);
+                particle.pos.mutableAdd(this.gravity);
 
                 // inertia
-                particles[i].pos.mutableAdd(velocity);
+                particle.pos.mutableAdd(velocity);
             }
         }
 
@@ -259,22 +257,18 @@ class Verlet {
 
         // relax
         const stepCoef = 1/step;
-        for (let c in this.composites) {
-
-            let constraints = this.composites[ c ].constraints;
-
+        for (let composite of this.composites) {
             for (let i = 0; i < step; ++i) {
-                for (let j in constraints) {
-                    constraints[ j ].relax(stepCoef);
+                for (let constraint of composite.constraints) {
+                    constraint.relax(stepCoef);
                 }
             }
         }
 
         // bounds checking
-        for (let c in this.composites) {
-            let particles = this.composites[c].particles;
-            for (let i in particles) {
-                bounds(particles[i].pos, this.width, this.height);
+        for (let composite of this.composites) {
+            for (let particle of composite.particles) {
+                bounds(particle.pos, this.width, this.height);
             }
         }
     }
@@ -283,25 +277,23 @@ class Verlet {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        for (let c in this.composites) {
+        for (let composite of this.composites) {
 
             // draw constraints
-            if (this.composites[c].drawConstraints) {
-                this.composites[c].drawConstraints(this.ctx, this.composites[c]);
+            if (composite.drawConstraints) {
+                composite.drawConstraints(this.ctx, composite);
             } else {
-                let constraints = this.composites[c].constraints;
-                for (let i in constraints) {
-                    constraints[i].draw(this.ctx);
+                for (let constraint of composite.constraints) {
+                    constraint.draw(this.ctx);
                 }
             }
 
             // draw particles
-            if (this.composites[c].drawParticles) {
-                this.composites[c].drawParticles(this.ctx, this.composites[c]);
+            if (composite.drawParticles) {
+                composite.drawParticles(this.ctx, composite);
             } else {
-                let particles = this.composites[c].particles;
-                for (let i in particles) {
-                    particles[i].draw(this.ctx);
+                for (let particle of composite.particles) {
+                    particle.draw(this.ctx);
                 }
             }
         }
