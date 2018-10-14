@@ -38,17 +38,19 @@ class Verlet {
         $container.append(this.$canvas);
 
         this.canvas = this.$canvas.get(0);
-
-        this.canvas.style.width = ($container.width() + 'px');
-        this.canvas.setAttribute('width', $container.width());
-
-        this.canvas.style.height = ($container.height() + 'px');
-        this.canvas.setAttribute('height', $container.height());
-
         this.ctx = this.canvas.getContext("2d");
 
+        this.canvas.style.width  = (this.width + 'px');
+        this.canvas.style.height = (this.height + 'px');
+
+        const dpr = window.devicePixelRatio || 1;
+        this.canvas.width  = dpr * this.width;
+        this.canvas.height = dpr * this.height ;
+
+        this.ctx.scale(dpr, dpr);
+
         this.ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
-        this.ctx.fillRect(0, 0, this.width, this.height);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
 
         this.mouse = new Vec2(0,0);
