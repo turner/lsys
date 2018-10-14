@@ -24,7 +24,6 @@
 import Vec2 from './vec2d.js';
 import Composite from './composite.js';
 import Particle from './particle.js';
-import DistanceConstraint from './distanceConstraint.js';
 import PinConstraint from './pinConstraint.js';
 
 class Verlet {
@@ -102,42 +101,6 @@ class Verlet {
         let composite = new Composite();
         composite.particles.push(new Particle(pos));
         this.composites.push(composite);
-        return composite;
-    }
-
-    cloth(origin, width, height, segments, pinMod, stiffness) {
-
-        let composite = new Composite();
-
-        const xStride = width/segments;
-        const yStride = height/segments;
-
-        for (let y of [...Array(segments).keys()]) {
-            for (let x of [...Array(segments).keys()]) {
-
-                let px = origin.x + x*xStride - width/2 + xStride/2;
-                let py = origin.y + y*yStride - height/2 + yStride/2;
-
-                composite.particles.push(new Particle(new Vec2(px, py)));
-
-                if (x > 0) {
-                    composite.constraints.push(new DistanceConstraint(composite.particles[y * segments + x], composite.particles[y * segments + x - 1], stiffness));
-                }
-
-                if (y > 0) {
-                    composite.constraints.push(new DistanceConstraint(composite.particles[y * segments + x], composite.particles[(y - 1)*segments + x], stiffness));
-                }
-            }
-        }
-
-        for (let x of [...Array(segments).keys()]) {
-            if (x % pinMod === 0) {
-                composite.pin(x);
-            }
-        }
-
-        this.composites.push(composite);
-
         return composite;
     }
 
