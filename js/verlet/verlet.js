@@ -284,6 +284,7 @@ class Verlet {
 
     draw() {
 
+        // clear to transparent black
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         for (let composite of this.composites) {
@@ -320,14 +321,8 @@ class Verlet {
 }
 
 function bounds(pos, width, height) {
-    if (pos.y > height-1)
-        pos.y = height-1;
-
-    if (pos.x < 0)
-        pos.x = 0;
-
-    if (pos.x > width-1)
-        pos.x = width-1;
+    pos.x = Math.min(Math.max(pos.x, 0),  width - 1);
+    pos.y = Math.min(Math.max(pos.y, 0), height - 1);
 }
 
 export default Verlet;
