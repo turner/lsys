@@ -109,20 +109,16 @@ class Verlet {
 
         let composite = new Composite();
 
-        vertices.forEach((vertex, i) => {
+        for (let vertex of vertices) {
+
             composite.particles.push(new Particle(vertex));
+
+            let i = vertices.indexOf(vertex);
             if (i > 0) {
                 composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[ i - 1 ], stiffness));
             }
 
-        });
-
-        // for (let i in vertices) {
-        //     composite.particles.push(new Particle(vertices[ i ]));
-        //     if (i > 0) {
-        //         composite.constraints.push(new DistanceConstraint(composite.particles[i], composite.particles[i - 1], stiffness));
-        //     }
-        // }
+        }
 
         this.composites.push(composite);
         return composite;
