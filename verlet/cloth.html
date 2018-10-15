@@ -42,12 +42,12 @@
     $(document).ready(function () {
 
         let $root_container = $('#root-container');
-        let sim = new Verlet($root_container);
-        sim.friction = 1;
+        let simulation = new Verlet($root_container);
+        simulation.friction = 1;
 
         const segments = 20;
         const dimen = $root_container.width();
-        let cloth = new Cloth(new Vec2(dimen/2, dimen/2), min, min, segments, 6, 0.9);
+        let cloth = new Cloth(simulation, new Vec2(dimen/2, dimen/2), dimen/2, dimen/2, segments, 6, 0.9);
 
 
         let requestAnimFrame = (callback) => {
@@ -55,8 +55,8 @@
         };
 
         let loop = () => {
-            sim.frame(16);
-            sim.draw();
+            simulation.frame(16);
+            simulation.draw();
             requestAnimFrame(loop);
         };
 

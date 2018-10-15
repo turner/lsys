@@ -22,7 +22,7 @@
  */
 
 import Composite from "./composite.js";
-import Vec2 from "./vec2d";
+import Vec2 from "./vec2d.js";
 import Particle from "./particle.js";
 import DistanceConstraint from "./distanceConstraint.js";
 import PinConstraint from './pinConstraint.js';
@@ -60,7 +60,7 @@ class Cloth {
             }
         }
 
-        composite.drawConstraints = makeDrawConstraints(simulation.ctx, composite.particles, width, height, segments);
+        composite.drawConstraints = makeDrawConstraints(width, height, segments);
 
         this.composite = composite;
 
@@ -70,7 +70,7 @@ class Cloth {
 
 }
 
-function makeDrawConstraints(ctx, composite, width, height, segments) {
+function makeDrawConstraints(width, height, segments) {
 
     return function(ctx, composite) {
 
