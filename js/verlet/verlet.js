@@ -97,13 +97,6 @@ class Verlet {
 
     }
 
-    point(pos) {
-        let composite = new Composite();
-        composite.particles.push(new Particle(pos));
-        this.composites.push(composite);
-        return composite;
-    }
-
     nearestEntity() {
 
         let d2Nearest = 0;
@@ -155,7 +148,7 @@ class Verlet {
                 let velocity = particle.pos.sub(particle.lastPos).scale(this.friction);
 
                 // ground friction
-                if (particle.pos.y >= this.height-1 && velocity.length2() > 0.000001) {
+                if (particle.pos.y >= this.height - 1 && velocity.length2() > 0.000001) {
 
                     const m = velocity.length();
 
