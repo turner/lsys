@@ -49,12 +49,13 @@
         let vertices =
             [
                 new Vec2(0.25 * dimen, 0.5 * dimen),
-                new Vec2(0.50 * dimen, 0.5 * dimen),
+                new Vec2(0.50 * dimen, 0.25 * dimen),
                 new Vec2(0.75 * dimen, 0.5 * dimen)
             ];
         let lineSegment = new LineSegment(simulation, vertices, 0.02);
-        let a = lineSegment.pin(0);
-        let b = lineSegment.pin(2);
+
+        lineSegment.pin(0);
+        lineSegment.pin(2);
 
         // animation loop
 

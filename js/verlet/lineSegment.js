@@ -48,6 +48,10 @@ class LineSegment {
     pin (index) {
         return this.composite.pin(index);
     }
+
+    getParticleAtIndex(index) {
+        return this.composite.particles[ index ];
+    }
 }
 
 export default LineSegment;
