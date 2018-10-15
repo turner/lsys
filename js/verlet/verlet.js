@@ -192,34 +192,34 @@ class Verlet {
         }
     }
 
-    draw() {
+        draw() {
 
-        // clear to transparent black
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            // clear to transparent black
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        for (let composite of this.composites) {
+            for (let composite of this.composites) {
 
-            // draw constraints
-            if (composite.drawConstraints) {
-                composite.drawConstraints(this.ctx, composite);
-            } else {
-                for (let constraint of composite.constraints) {
-                    constraint.draw(this.ctx);
+                // draw constraints
+                if (composite.drawConstraints) {
+                    composite.drawConstraints(this.ctx, composite);
+                } else {
+                    for (let constraint of composite.constraints) {
+                        constraint.draw(this.ctx);
+                    }
+                }
+
+                // draw particles
+                if (composite.drawParticles) {
+                    composite.drawParticles(this.ctx, composite);
+                } else {
+                    for (let particle of composite.particles) {
+                        particle.draw(this.ctx);
+                    }
                 }
             }
 
-            // draw particles
-            if (composite.drawParticles) {
-                composite.drawParticles(this.ctx, composite);
-            } else {
-                for (let particle of composite.particles) {
-                    particle.draw(this.ctx);
-                }
-            }
-        }
-
-        // highlight nearest / dragged entity
-        let nearest = this.draggedEntity || this.nearestEntity();
+            // highlight nearest / dragged entity
+            let nearest = this.draggedEntity || this.nearestEntity();
 
         if (nearest) {
             this.ctx.beginPath();

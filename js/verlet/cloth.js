@@ -20,10 +20,12 @@
  * THE SOFTWARE.
  *
  */
-import Particle from "./particle.js";
-import DistanceConstraint from "./distanceConstraint.js";
+
 import Composite from "./composite.js";
 import Vec2 from "./vec2d";
+import Particle from "./particle.js";
+import DistanceConstraint from "./distanceConstraint.js";
+import PinConstraint from './pinConstraint.js';
 
 class Cloth {
 
@@ -58,10 +60,72 @@ class Cloth {
             }
         }
 
+        composite.drawConstraints = makeDrawConstraints(simulation.ctx, composite.particles, width, height, segments);
+
         this.composite = composite;
 
         simulation.composites.push(this.composite);
+
     }
+
 }
+
+function makeDrawConstraints(ctx, composite, width, height, segments) {
+
+    return function(ctx, composite) {
+
+        let particles = composite.particles;
+        let constraints = composite.constraints;
+
+        const stride = width/segments;
+
+        for (let y = 1; y < segments; ++y) {
+
+            for (let x = 1; x < segments; ++x) {
+
+                ctx.beginPath();
+
+                const i1 = (y - 1) * segments + x - 1;
+                const i2 = (y    ) * segments + x;
+
+                ctx.moveTo(particles[ i1     ].pos.x, particles[ i1     ].pos.y);
+                ctx.lineTo(particles[ i1 + 1 ].pos.x, particles[ i1 + 1 ].pos.y);
+
+                ctx.lineTo(particles[ i2     ].pos.x, particles[ i2     ].pos.y);
+                ctx.lineTo(particles[ i2 - 1 ].pos.x, particles[ i2 - 1 ].pos.y);
+
+                let off = particles[ i2 ].pos.x - particles[ i1 ].pos.x;
+                off += particles[ i2 ].pos.y - particles[ i1 ].pos.y;
+                off *= 0.25;
+
+                let coef = Math.round((Math.abs(off)/stride)*255);
+                if (coef > 255) {
+                    coef = 255;
+                }
+
+                ctx.fillStyle = "rgba(" + coef + ",0," + (255 - coef)+ "," + lerp(0.25, 1, coef/255.0)+")";
+
+                ctx.fill();
+            }
+        }
+
+        for (let constraint of constraints) {
+
+            if (constraint instanceof PinConstraint) {
+                ctx.beginPath();
+                ctx.arc(constraint.pos.x, constraint.pos.y, 1.2, 0, 2*Math.PI);
+                ctx.fillStyle = "rgba(255,255,255,1)";
+                ctx.fill();
+            }
+        }
+
+        function lerp(a, b, p) {
+            return (b-a)*p + a;
+        }
+
+    }
+
+}
+
 
 export default Cloth;

@@ -33,7 +33,7 @@ class Point {
 
         this.composite = composite;
 
-        this.composites.push(this.composite);
+        simulation.composites.push(this.composite);
 
     }
 
