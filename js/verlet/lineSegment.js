@@ -22,8 +22,9 @@
  */
 
 import Particle from "./particle.js";
-import DistanceConstraint from "./distanceConstraint.js";
 import Composite from "./composite.js";
+import DistanceConstraint from "./distanceConstraint.js";
+import AngleConstraint from './angleConstraint.js';
 
 class LineSegment {
 
@@ -45,8 +46,18 @@ class LineSegment {
         simulation.composites.push(this.composite);
     }
 
-    pin (index) {
+    addPinConstraintAtParticleIndex(index) {
         return this.composite.pin(index);
+    }
+
+    addAngleConstraintAtParticleIndices(a, b, c, stiffness) {
+
+        let pa = this.composite.particles[ a ];
+        let pb = this.composite.particles[ b ];
+        let pc = this.composite.particles[ c ];
+
+        this.composite.constraints.push(new AngleConstraint(pa, pb, pc, stiffness));
+
     }
 
     getParticleAtIndex(index) {

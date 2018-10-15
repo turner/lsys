@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Cloth</title>
+    <title>Line Segment</title>
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/>
 
@@ -37,33 +37,34 @@
 
     import Vec2 from '../js/verlet/vec2d.js';
     import Verlet from '../js/verlet/verlet.js'
+    import LineSegment from "../js/verlet/lineSegment.js";
+    import AngleConstraint from '../js/verlet/angleConstraint.js';
 
     $(document).ready(function () {
 
         let $root_container = $('#root-container');
-        let sim = new Verlet($root_container);
-        sim.friction = 1;
+        let simulation = new Verlet($root_container);
+        simulation.friction = 1;
 
         let dimen = $root_container.width();
         let vertices =
             [
                 new Vec2(0.25 * dimen, 0.5 * dimen),
-                new Vec2(0.50 * dimen, 0.5 * dimen),
+                new Vec2(0.50 * dimen, 0.75 * dimen),
                 new Vec2(0.75 * dimen, 0.5 * dimen)
             ];
-        let segment = sim.lineSegments(vertices, 0.02);
-        let a = segment.addPinConstraintAtParticleIndex(0);
-        let b = segment.addPinConstraintAtParticleIndex(2);
+        let lineSegment = new LineSegment(simulation, vertices, 0.02);
 
-        // animation loop
+        lineSegment.addAngleConstraintAtParticleIndices(0, 1, 2, 0.02);
+
 
         let requestAnimFrame = (callback) => {
             window.setTimeout(callback, 1000 / 60);
         };
 
         let loop = () => {
-            sim.frame(16);
-            sim.draw();
+            simulation.frame(16);
+            simulation.draw();
             requestAnimFrame(loop);
         };
 

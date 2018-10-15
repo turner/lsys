@@ -54,8 +54,8 @@
             ];
         let lineSegment = new LineSegment(simulation, vertices, 0.02);
 
-        lineSegment.pin(0);
-        lineSegment.pin(2);
+        lineSegment.addPinConstraintAtParticleIndex(0);
+        lineSegment.addPinConstraintAtParticleIndex(2);
 
         // animation loop
 

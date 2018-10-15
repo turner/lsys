@@ -52,8 +52,8 @@
                 new Vec2(0.75 * dimen, 0.5 * dimen)
             ];
         let segment = sim.lineSegments(vertices, 0.02);
-        let a = segment.pin(0);
-        let b = segment.pin(2);
+        let a = segment.addPinConstraintAtParticleIndex(0);
+        let b = segment.addPinConstraintAtParticleIndex(2);
 
         // animation loop
 
