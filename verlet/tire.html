@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Hello Verlet</title>
+    <title>Tire</title>
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/>
 
@@ -45,10 +45,12 @@
         let simulation = new Verlet($root_container);
         simulation.friction = 1;
 
-        let dimen = $root_container.width();
+        const dimen = $root_container.width();
 
-        let segments = 8;
-        let tire = new Tire(simulation, new Vec2(dimen/2, dimen/2), dimen/4, segments, 1, 1);
+        const segments = 8;
+        const spokeStiffness = 1.0/16;
+        const treadStiffness = 1.0/16;
+        let tire = new Tire(simulation, new Vec2(dimen/2, dimen/2), dimen/4, segments, spokeStiffness, treadStiffness);
 
         // animation loop
         let requestAnimFrame = (callback) => {
