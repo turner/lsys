@@ -35,18 +35,21 @@ class Tire {
         // particles
         const stride = (2.0 * Math.PI)/segments;
 
-        for (let i of [...Array(segments).keys()]) {
+        const indices = [...Array(segments).keys()];
+
+        for (let i of indices) {
             const theta = i * stride;
             composite.particles.push(new Particle(new Vec2(origin.x + Math.cos(theta)*radius, origin.y + Math.sin(theta)*radius)));
         }
 
-        let center = new Particle(origin);
-        composite.particles.push(center);
+        let originParticle = new Particle(origin);
+        composite.particles.push(originParticle);
+        composite.pin(composite.particles.indexOf(originParticle));
 
         // constraints
-        for (let i of [...Array(segments).keys()]) {
+        for (let i of indices) {
             composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[(i + 1) % segments], treadStiffness));
-            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], center, spokeStiffness));
+            composite.constraints.push(new DistanceConstraint(composite.particles[ i ], originParticle, spokeStiffness));
             composite.constraints.push(new DistanceConstraint(composite.particles[ i ], composite.particles[(i + 5) % segments], treadStiffness));
         }
 
